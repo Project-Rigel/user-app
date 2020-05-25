@@ -1,0 +1,101 @@
+{
+  "project_info": {
+    "project_number": "457735200635",
+    "firebase_url": "https://rigel-admin.firebaseio.com",
+    "project_id": "rigel-admin",
+    "storage_bucket": "rigel-admin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:457735200635:android:b9a15882b747fc1d8427de",
+        "android_client_info": {
+          "package_name": "com.rigel.business"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "457735200635-48ke11bkoea64ue09h6qfg1mk3hb8g4h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rigel.business",
+            "certificate_hash": "1b892e667195d5b5ef1f2d7cbcfe716cb8ec0c19"
+          }
+        },
+        {
+          "client_id": "457735200635-lfp1rpnghsuu4hodv0pr0gac6cf48spr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgVgvD1fegr3ouOfARC5fbr8hRKJBESZY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "457735200635-lfp1rpnghsuu4hodv0pr0gac6cf48spr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "457735200635-kvtquthh6dt6m00hh9ou7hjtcrnn2l7b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.rigel.business",
+                "app_store_id": "1512765536"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:457735200635:android:5bfe588b3a4d768f8427de",
+        "android_client_info": {
+          "package_name": "com.rigel.customer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "457735200635-1bd721dcfggfgvk0eor2ghf6brfj72kh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rigel.customer",
+            "certificate_hash": "5d5ac264a71b462bf31d6ee00ed71a678a020938"
+          }
+        },
+        {
+          "client_id": "457735200635-lfp1rpnghsuu4hodv0pr0gac6cf48spr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgVgvD1fegr3ouOfARC5fbr8hRKJBESZY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "457735200635-lfp1rpnghsuu4hodv0pr0gac6cf48spr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "457735200635-kvtquthh6dt6m00hh9ou7hjtcrnn2l7b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.rigel.business",
+                "app_store_id": "1512765536"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:rigel/shared/bottom_nav.dart';
 import 'services/services.dart';
 import 'screens/screens.dart';
 import 'package:provider/provider.dart';
@@ -11,10 +12,15 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
     return MultiProvider(
       providers: [
         StreamProvider<Report>.value(value: Global.reportRef.documentStream),
         StreamProvider<FirebaseUser>.value(value: AuthService().user),
+        ChangeNotifierProvider<BottomNavigationBarProvider>(
+          child: AppBottomNav(),
+          create: (BuildContext context) => BottomNavigationBarProvider(),
+        ),
       ],
       child: MaterialApp(
         // Firebase Analytics
@@ -25,6 +31,8 @@ class MyApp extends StatelessWidget {
         // Named Routes
         routes: {
           '/': (context) => LoginScreen(),
+          '/verification': (context) => PinCodeVerificationScreen(),
+          '/home': (context) => AppBottomNav(),
           '/topics': (context) => TopicsScreen(),
           '/profile': (context) => ProfileScreen(),
           '/about': (context) => AboutScreen(),
@@ -48,5 +56,15 @@ class MyApp extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+class BottomNavigationBarProvider with ChangeNotifier {
+  int _currentIndex = 0;
+
+  get currentIndex => _currentIndex;
+
+  set currentIndex(int index) {
+    _currentIndex = index;
+    notifyListeners();
   }
 }

@@ -41,6 +41,10 @@ class AuthService {
       AuthResult firebaseResult = await _auth.signInWithCredential(credential);
       FirebaseUser user = firebaseResult.user;
 
+      //New User
+      if(firebaseResult.additionalUserInfo.isNewUser){
+        newUserData(user);
+      }
       // Update user data
       updateUserData(user);
 
@@ -66,6 +70,10 @@ class AuthService {
       AuthResult result = await _auth.signInWithCredential(credential);
       FirebaseUser user = result.user;
 
+      //New User
+      if(result.additionalUserInfo.isNewUser){
+        newUserData(user);
+      }
       // Update user data
       updateUserData(user);
 
@@ -112,12 +120,20 @@ class AuthService {
   }
 
   /// Updates the User's data in Firestore on each new login
-  Future<void> updateUserData(FirebaseUser user) {
+  Future<void> newUserData(FirebaseUser user) {
     DocumentReference reportRef =
         _db.collection('customers').document(user.uid);
 
-    return reportRef.setData({'uid': user.uid, 'lastActivity': DateTime.now()},
+    return reportRef.setData({'uid': user.uid, 'creationDate': DateTime.now(), 'verified': false},
         merge: true);
+  }
+
+  Future<void> updateUserData(FirebaseUser user) {
+    DocumentReference reportRef =
+    _db.collection('customers').document(user.uid);
+
+      return reportRef.setData({'lastActivity': DateTime.now()},
+          merge: true);
   }
 
   // Sign out

@@ -1,9 +1,15 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:rigel/screens/login/widgets/loginForm.dart';
 import 'package:rigel/services/services.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'dart:async';
+import 'dart:io';
 
 class LoginScreen extends StatefulWidget {
   createState() => LoginScreenState();
@@ -11,6 +17,8 @@ class LoginScreen extends StatefulWidget {
 
 class LoginScreenState extends State<LoginScreen> {
   AuthService auth = AuthService();
+  final Firestore _db = Firestore.instance;
+
 
   @override
   void initState() {
@@ -18,10 +26,23 @@ class LoginScreenState extends State<LoginScreen> {
     auth.getUser.then(
       (user) {
         if (user != null) {
-          Navigator.pushReplacementNamed(context, '/topics');
+          if(isUserVerfied(user) == true){
+            Navigator.pushReplacementNamed(context, '/home');
+          }  else {
+            Navigator.pushReplacementNamed(context, "/verification");
+          }
         }
-      },
+      }
     );
+  }
+
+  Future isUserVerfied(FirebaseUser user) async {
+
+    DocumentSnapshot snapshot = await _db.collection('customers').document(user.uid).get();
+    bool verified = snapshot['verified'];
+
+    log('data: $verified');
+    return verified;
   }
 
   Widget _divider() {

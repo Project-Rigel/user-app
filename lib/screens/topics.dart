@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../services/services.dart';
 import '../shared/shared.dart';
 import '../screens/screens.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TopicsScreen extends StatelessWidget {
@@ -120,6 +121,13 @@ class TopicScreen extends StatelessWidget {
           style:
               TextStyle(height: 2, fontSize: 20, fontWeight: FontWeight.bold),
         ),
+        FlatButton(onPressed: () => CloudFunctions.instance.useFunctionsEmulator(origin: "//127.0.0.1:4000").getHttpsCallable(functionName: "execPurchase").call(
+        {
+        "doc_id": "4567dgs87sdg",
+        "name": "Jorge MB",
+        "email": "jorgemartinezbastida@gmail.com"
+        }),
+            child: Text("JORGE")),
         QuizList(topic: topic)
       ]),
     );

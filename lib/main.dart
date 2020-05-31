@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:rigel/screens/login/phoneInput.dart';
 import 'package:rigel/shared/bottom_nav.dart';
 import 'services/services.dart';
 import 'screens/screens.dart';
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
         // Named Routes
         routes: {
           '/': (context) => LoginScreen(),
-          '/verification': (context) => PinCodeVerificationScreen(),
+          '/verification': (context) => PhoneInputScreen(),
           '/home': (context) => AppBottomNav(),
           '/topics': (context) => TopicsScreen(),
           '/profile': (context) => ProfileScreen(),

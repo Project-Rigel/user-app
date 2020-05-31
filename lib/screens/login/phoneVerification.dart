@@ -1,16 +1,25 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:rigel/services/auth.dart';
 
 class PinCodeVerificationScreen extends StatefulWidget {
-  createState() => _PinCodeVerificationScreenState();
+  final String phoneNumber;
+  PinCodeVerificationScreen(this.phoneNumber);
+
+  @override
+  _PinCodeVerificationScreenState createState() =>
+      _PinCodeVerificationScreenState();
 }
 
 class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
   var onTapRecognizer;
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
 
   TextEditingController textEditingController = TextEditingController()
     ..text = "123456";
@@ -83,7 +92,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                       text: "Enter the code sent to ",
                       children: [
                         TextSpan(
-                            text: "63479865436789",
+                            text: widget.phoneNumber,
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,

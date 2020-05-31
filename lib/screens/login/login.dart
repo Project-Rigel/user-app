@@ -5,9 +5,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:apple_sign_in/apple_sign_in.dart';
+import 'package:rigel/screens/login/widgets/loginBtn.dart';
 import 'package:rigel/screens/login/widgets/loginForm.dart';
 import 'package:rigel/services/services.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'dart:async';
 import 'dart:io';
 
@@ -26,22 +26,27 @@ class LoginScreenState extends State<LoginScreen> {
     auth.getUser.then(
       (user) {
         if (user != null) {
-          if(isUserVerfied(user) == true){
-            Navigator.pushReplacementNamed(context, '/home');
-          }  else {
-            Navigator.pushReplacementNamed(context, "/verification");
-          }
-        }
+          isUserVerified(user).then((val) {
+            if(val == true){
+              Navigator.pushReplacementNamed(context, '/home');
+            }  else {
+              Navigator.pushReplacementNamed(context, "/verification");
+            }
+            print("success");
+          }).catchError((error, stackTrace) {
+            print("outer: $error");
+          });
+        }//TODO modal saying service not available
       }
     );
   }
 
-  Future isUserVerfied(FirebaseUser user) async {
+  Future<bool> isUserVerified(FirebaseUser user) async {
 
     DocumentSnapshot snapshot = await _db.collection('customers').document(user.uid).get();
     bool verified = snapshot['verified'];
 
-    log('data: $verified');
+    log(verified.runtimeType.toString());
     return verified;
   }
 
@@ -186,38 +191,6 @@ class LoginScreenState extends State<LoginScreen> {
               ],
             ),
           )),
-    );
-  }
-}
-
-class LoginButton extends StatelessWidget {
-  final Color color;
-  final IconData icon;
-  final String text;
-  final Function loginMethod;
-
-  const LoginButton(
-      {Key key, this.text, this.icon, this.color, this.loginMethod})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 5),
-      child: FlatButton.icon(
-        padding: EdgeInsets.all(20),
-        icon: Icon(icon, color: Colors.white),
-        color: color,
-        onPressed: () async {
-          var user = await loginMethod();
-          if (user != null) {
-            Navigator.pushReplacementNamed(context, '/topics');
-          }
-        },
-        label: Expanded(
-          child: Text('$text', textAlign: TextAlign.center),
-        ),
-      ),
     );
   }
 }

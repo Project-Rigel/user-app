@@ -1,3 +1,6 @@
+
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:apple_sign_in/apple_sign_in.dart';
@@ -9,6 +12,8 @@ class AuthService {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final Firestore _db = Firestore.instance;
+  String mVerificationId;
+
 
   // Firebase user one-time fetch
   Future<FirebaseUser> get getUser => _auth.currentUser();
@@ -42,7 +47,7 @@ class AuthService {
       FirebaseUser user = firebaseResult.user;
 
       //New User
-      if(firebaseResult.additionalUserInfo.isNewUser){
+      if (firebaseResult.additionalUserInfo.isNewUser) {
         newUserData(user);
       }
       // Update user data
@@ -71,13 +76,32 @@ class AuthService {
       FirebaseUser user = result.user;
 
       //New User
-      if(result.additionalUserInfo.isNewUser){
+      if (result.additionalUserInfo.isNewUser) {
         newUserData(user);
       }
       // Update user data
       updateUserData(user);
 
       return user;
+    } catch (error) {
+      print(error);
+      return null;
+    }
+  }
+
+  /// Sign in with Google
+  Future<void> phone2Factor(String phone) async {
+    try {
+      String phoneNum = "+34" + phone;
+      log('data: $phoneNum');
+      await _auth.verifyPhoneNumber(
+          phoneNumber: phoneNum,
+          timeout: Duration(seconds: 10),
+          verificationCompleted: (authCredential) =>
+              _verificationComplete(authCredential),
+          verificationFailed: (authException) => log(authException.message),
+          codeSent: (verificationId, [code]) => _codeSent(verificationId, [code]),
+          codeAutoRetrievalTimeout: null);
     } catch (error) {
       print(error);
       return null;
@@ -119,25 +143,41 @@ class AuthService {
     return user;
   }
 
-  /// Updates the User's data in Firestore on each new login
+  /// Creates the User's data in Firestore on first login
   Future<void> newUserData(FirebaseUser user) {
     DocumentReference reportRef =
         _db.collection('customers').document(user.uid);
 
-    return reportRef.setData({'uid': user.uid, 'creationDate': DateTime.now(), 'verified': false},
+    return reportRef.setData(
+        {'uid': user.uid, 'creationDate': DateTime.now(), 'verified': false},
         merge: true);
   }
 
+  /// Updates the User's data in Firestore on each new login
   Future<void> updateUserData(FirebaseUser user) {
     DocumentReference reportRef =
-    _db.collection('customers').document(user.uid);
+        _db.collection('customers').document(user.uid);
 
-      return reportRef.setData({'lastActivity': DateTime.now()},
-          merge: true);
+    return reportRef.setData({'lastActivity': DateTime.now()}, merge: true);
+  }
+
+  Future<void> onUserVerificationComplete(FirebaseUser user, String phone) {
+    DocumentReference reportRef =
+        _db.collection('customers').document(user.uid);
+
+    reportRef.setData({'verified': true, 'phoneNumber': phone}, merge: true);
   }
 
   // Sign out
   Future<void> signOut() {
     return _auth.signOut();
+  }
+
+  _verificationComplete(AuthCredential authCredential) {
+    FirebaseAuth.instance.signInWithCredential(authCredential);
+  }
+
+  _codeSent(String verificationId, List<int> forceResendingToken) {
+    mVerificationId = verificationId;
   }
 }

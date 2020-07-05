@@ -35,7 +35,7 @@ class PhoneInputScreen extends StatelessWidget {
               onPressed: () async {
                 if (user != null) {
                   auth.phone2Factor(myController.text);
-                  //Navigator.push(context, MaterialPageRoute(builder: (context) => PinCodeVerificationScreen(myController.text)),);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => PinCodeVerificationScreen(myController.text)),);
                 }
               },
             ),

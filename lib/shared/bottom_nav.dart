@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:rigel/screens/bussiness_details/bussiness.dart';
 import 'package:rigel/screens/screens.dart';
 
 import '../main.dart';
@@ -14,7 +15,7 @@ class AppBottomNav extends StatefulWidget {
 class _AppBottomNavState
     extends State<AppBottomNav> {
   var currentTab = [
-    TopicsScreen(),
+    BussinessScreen(),
     ProfileScreen(),
     AboutScreen(),
   ];

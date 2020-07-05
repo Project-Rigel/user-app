@@ -89,7 +89,7 @@ class AuthService {
     }
   }
 
-  /// Sign in with Google
+  /// Sign in with Phone
   Future<void> phone2Factor(String phone) async {
     try {
       String phoneNum = "+34" + phone;

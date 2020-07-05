@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:rigel/screens/bussiness_details/bussiness.dart';
 import 'package:rigel/screens/login/phoneInput.dart';
 import 'package:rigel/shared/bottom_nav.dart';
 import 'services/services.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
           '/': (context) => LoginScreen(),
           '/verification': (context) => PhoneInputScreen(),
           '/home': (context) => AppBottomNav(),
-          '/topics': (context) => TopicsScreen(),
+          '/topics': (context) => BussinessScreen(),
           '/profile': (context) => ProfileScreen(),
           '/about': (context) => AboutScreen(),
         },
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
           bottomAppBarTheme: BottomAppBarTheme(
             color: Colors.black87,
           ),
-          brightness: Brightness.dark,
+          brightness: Brightness.light,
           textTheme: TextTheme(
             body1: TextStyle(fontSize: 18),
             body2: TextStyle(fontSize: 16),

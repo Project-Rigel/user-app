@@ -36,6 +36,10 @@ dependencies:
   pin_code_fields: ^3.0.1
   flare_dart : 2.2.5
   flare_flutter: 1.7.1
+  modal_bottom_sheet: ^0.1.6+1
+  table_calendar: ^2.2.3
+
+
 
 
 

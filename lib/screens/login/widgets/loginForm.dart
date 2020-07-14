@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rigel/shared/animations/fade_animation.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key key}) : super(key: key);
@@ -11,8 +12,9 @@ class _LoginFormState extends State<LoginForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
   String _name;
+  String _surname;
   String _email;
-  String _mobile;
+  String _password;
 
   @override
   Widget build(BuildContext context) {
@@ -20,52 +22,144 @@ class _LoginFormState extends State<LoginForm> {
       child: new Form(
         key: _formKey,
         autovalidate: _autoValidate,
-        child: FormUI(),
+        child: formUI(),
       ),
     );
   }
 
-  Widget FormUI() {
+  Widget formUI() {
     return new Column(
       children: <Widget>[
-        new TextFormField(
-          decoration: const InputDecoration(labelText: 'Name'),
-          keyboardType: TextInputType.text,
-          validator: validateName,
-          onSaved: (String val) {
-            _name = val;
-          },
+        FadeAnimation(
+            1.8,
+            Container(
+              padding: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Color.fromRGBO(143, 148, 251, .2),
+                        blurRadius: 20.0,
+                        offset: Offset(0, 10))
+                  ]),
+              child: new Column(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                        border: Border(
+                            bottom: BorderSide(color: Colors.grey[100]))),
+                    child: new TextFormField(
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "Nombre",
+                          hintStyle: TextStyle(color: Colors.grey[400])),
+                      keyboardType: TextInputType.text,
+                      validator: validateName,
+                      onSaved: (String val) {
+                        _name = val;
+                      },
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                        border: Border(
+                            bottom: BorderSide(color: Colors.grey[100]))),
+                    child: new TextFormField(
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "Apellidos",
+                          hintStyle: TextStyle(color: Colors.grey[400])),
+                      keyboardType: TextInputType.text,
+                      validator: validateName,
+                      onSaved: (String val) {
+                        _surname = val;
+                      },
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                        border: Border(
+                            bottom: BorderSide(color: Colors.grey[100]))),
+                    child: new TextFormField(
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "Email",
+                          hintStyle: TextStyle(color: Colors.grey[400])),
+                      keyboardType: TextInputType.emailAddress,
+                      validator: validateEmail,
+                      onSaved: (String val) {
+                        _email = val;
+                      },
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                        border: Border(
+                            bottom: BorderSide(color: Colors.grey[100]))),
+                    child: new TextFormField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "Contraseña",
+                          hintStyle: TextStyle(color: Colors.grey[400])),
+                      keyboardType: TextInputType.text,
+                      validator: validateName,
+                      onSaved: (String val) {
+                        _password = val;
+                      },
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(8.0),
+                    child: new TextFormField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "Repite la Contraseña",
+                          hintStyle: TextStyle(color: Colors.grey[400])),
+                      keyboardType: TextInputType.text,
+                      validator: validatePassword,
+                    ),
+                  ),
+                ],
+              ),
+            )),
+        SizedBox(
+          height: 10,
         ),
-        new TextFormField(
-          decoration: const InputDecoration(labelText: 'Mobile'),
-          keyboardType: TextInputType.phone,
-          validator: validateMobile,
-          onSaved: (String val) {
-            _mobile = val;
-          },
-        ),
-        new TextFormField(
-          decoration: const InputDecoration(labelText: 'Email'),
-          keyboardType: TextInputType.emailAddress,
-          validator: validateEmail,
-          onSaved: (String val) {
-            _email = val;
-          },
-        ),
-        new SizedBox(
-          height: 10.0,
-        ),
-        new RaisedButton(
-          onPressed: _sendToServer,
-          child: new Text('Validate'),
-        )
+        FadeAnimation(
+            2,
+            InkWell(
+              onTap: _sendToServer,
+              child: Container(
+                height: 50,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    gradient: LinearGradient(colors: [
+                      Color.fromRGBO(61, 225, 182, .6),
+                      Color.fromRGBO(53, 255, 170, 1),
+                    ])),
+                child: Center(
+                  child: Text(
+                    "Registrase",
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            )),
       ],
     );
   }
 
   String validateName(String value) {
     if (value.length < 3)
-      return 'Name must be more than 2 charater';
+      return 'Length must be more than 2 charater';
     else
       return null;
   }
@@ -88,13 +182,21 @@ class _LoginFormState extends State<LoginForm> {
       return null;
   }
 
+  String validatePassword(String value) {
+    if (value != _password)
+      return "Passwords doesn't match";
+    else
+      return null;
+  }
+
   _sendToServer() {
     if (_formKey.currentState.validate()) {
       // No any error in validation
       _formKey.currentState.save();
       print("Name $_name");
-      print("Mobile $_mobile");
+      print("Pass $_password");
       print("Email $_email");
+      print("Pass $_surname");
     } else {
       // validation error
       setState(() {

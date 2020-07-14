@@ -38,12 +38,7 @@ dependencies:
   flare_flutter: 1.7.1
   modal_bottom_sheet: ^0.1.6+1
   table_calendar: ^2.2.3
-
-
-
-
-
-
+  simple_animations: ^2.2.1
 
 dev_dependencies:
   flutter_test:
@@ -59,7 +54,14 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/otp.flr
-  #   - images/a_dot_ham.jpeg
+    - assets/clock.png
+    - assets/light-1.png
+    - assets/light-2.png
+    - assets/flutter_clip.png
+    - assets/flutter_clip-2.png
+    - assets/gni_logo_mono.png
+    - assets/gni_logo_white.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

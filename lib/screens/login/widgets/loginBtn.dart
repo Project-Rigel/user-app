@@ -13,10 +13,14 @@ class LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 5),
+      height: 50,
+      margin: EdgeInsets.only(bottom: 10),
       child: FlatButton.icon(
-        padding: EdgeInsets.all(20),
-        icon: Icon(icon, color: Colors.white),
+        padding: EdgeInsets.all(10),
+        shape: new RoundedRectangleBorder(
+            side: BorderSide(color: Theme.of(context).primaryColor),
+            borderRadius: new BorderRadius.circular(10.0)),
+        icon: Icon(icon, color: Theme.of(context).primaryColor),
         color: color,
         onPressed: () async {
           var user = await loginMethod();

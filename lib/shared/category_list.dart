@@ -28,7 +28,7 @@ class CategoryList extends StatelessWidget {
             children: <Widget>[
               Chip(
                 label: Text("Consultoría"),
-                backgroundColor: LightColors.kRed,
+                backgroundColor: Theme.of(context).primaryColor,
                 labelStyle: TextStyle(color: Colors.white),
               ),
               Chip(

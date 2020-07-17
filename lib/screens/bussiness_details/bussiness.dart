@@ -8,7 +8,6 @@ import 'package:rigel/shared/category_list.dart';
 import 'package:rigel/shared/top_container.dart';
 
 class BussinessScreen extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return BussinessLayout();
@@ -36,13 +35,16 @@ class BussinessLayout extends StatelessWidget {
         child: FloatingActionButton.extended(
           label: Text('Reservar tu cita'),
           icon: Icon(Icons.calendar_today),
-          backgroundColor: LightColors.kDarkBlue,
+          backgroundColor: Theme.of(context).primaryColorLight,
           foregroundColor: Colors.white,
           tooltip: 'Reservar',
-          onPressed: (){
-            showBarModalBottomSheet (
+          onPressed: () {
+            showBarModalBottomSheet(
               context: context,
-              builder: (context, scrollController) => Container(child:SelectDateModal(title: "TEST",)),
+              builder: (context, scrollController) => Container(
+                  child: SelectDateModal(
+                title: "TEST",
+              )),
             );
           },
         ),
@@ -50,11 +52,14 @@ class BussinessLayout extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       backgroundColor: Colors.white,
       body: SafeArea(
+        top: false,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             TopContainer(
-              height: 200,
+              height: MediaQuery.of(context).size.height / 4,
               width: width,
+              padding: EdgeInsets.only(top: 30.00),
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
@@ -118,4 +123,3 @@ class BussinessLayout extends StatelessWidget {
     );
   }
 }
-

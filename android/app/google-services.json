@@ -55,7 +55,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:457735200635:android:5bfe588b3a4d768f8427de",
         "android_client_info": {
-          "package_name": "com.rigel.customer"
+          "package_name": "com.greenandin.app"
         }
       },
       "oauth_client": [
@@ -63,7 +63,7 @@
           "client_id": "457735200635-1bd721dcfggfgvk0eor2ghf6brfj72kh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.rigel.customer",
+            "package_name": "com.greenandin.app",
             "certificate_hash": "5d5ac264a71b462bf31d6ee00ed71a678a020938"
           }
         },

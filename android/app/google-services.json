@@ -8,6 +8,42 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:457735200635:android:010ab054bda906b08427de",
+        "android_client_info": {
+          "package_name": "com.greenandin.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "457735200635-lfp1rpnghsuu4hodv0pr0gac6cf48spr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgVgvD1fegr3ouOfARC5fbr8hRKJBESZY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "457735200635-lfp1rpnghsuu4hodv0pr0gac6cf48spr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "457735200635-r5okmbf4l5vkqga2a8gcdbbi8totrcv8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.rigel.customer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:457735200635:android:b9a15882b747fc1d8427de",
         "android_client_info": {
           "package_name": "com.rigel.business"
@@ -40,11 +76,10 @@
               "client_type": 3
             },
             {
-              "client_id": "457735200635-kvtquthh6dt6m00hh9ou7hjtcrnn2l7b.apps.googleusercontent.com",
+              "client_id": "457735200635-r5okmbf4l5vkqga2a8gcdbbi8totrcv8.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.rigel.business",
-                "app_store_id": "1512765536"
+                "bundle_id": "com.rigel.customer"
               }
             }
           ]
@@ -55,15 +90,39 @@
       "client_info": {
         "mobilesdk_app_id": "1:457735200635:android:5bfe588b3a4d768f8427de",
         "android_client_info": {
-          "package_name": "com.greenandin.app"
+          "package_name": "com.rigel.customer"
         }
       },
       "oauth_client": [
         {
+          "client_id": "457735200635-sh9g4o4vskdtui3i9og20ki8g50c309o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rigel.customer",
+            "certificate_hash": "e8914c64f99ad68aa93e7b1ddf5f0a74f9eb36f0"
+          }
+        },
+        {
+          "client_id": "457735200635-3phbmhb659go87thts754hchj41j5b2j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rigel.customer",
+            "certificate_hash": "ca625a58c8c24a85b3e75225e642b8230a1a80d7"
+          }
+        },
+        {
+          "client_id": "457735200635-qeqo796irg16j2gstkndnomt1fris145.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rigel.customer",
+            "certificate_hash": "1b892e667195d5b5ef1f2d7cbcfe716cb8ec0c19"
+          }
+        },
+        {
           "client_id": "457735200635-1bd721dcfggfgvk0eor2ghf6brfj72kh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.greenandin.app",
+            "package_name": "com.rigel.customer",
             "certificate_hash": "5d5ac264a71b462bf31d6ee00ed71a678a020938"
           }
         },
@@ -85,11 +144,10 @@
               "client_type": 3
             },
             {
-              "client_id": "457735200635-kvtquthh6dt6m00hh9ou7hjtcrnn2l7b.apps.googleusercontent.com",
+              "client_id": "457735200635-r5okmbf4l5vkqga2a8gcdbbi8totrcv8.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.rigel.business",
-                "app_store_id": "1512765536"
+                "bundle_id": "com.rigel.customer"
               }
             }
           ]

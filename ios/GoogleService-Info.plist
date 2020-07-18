@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>457735200635-r5okmbf4l5vkqga2a8gcdbbi8totrcv8.apps.googleusercontent.com</string>
+	<string>457735200635-6k4de0emqa669h46813da3714g4f2f4u.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.457735200635-r5okmbf4l5vkqga2a8gcdbbi8totrcv8</string>
+	<string>com.googleusercontent.apps.457735200635-6k4de0emqa669h46813da3714g4f2f4u</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>457735200635-3phbmhb659go87thts754hchj41j5b2j.apps.googleusercontent.com</string>
+	<string>457735200635-i672uevucj4fsiilsikh233j7f205f94.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyAqWb--GfRH5A_t6k8uCmMY5-wLbgDUkD4</string>
 	<key>GCM_SENDER_ID</key>
@@ -31,7 +31,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:457735200635:ios:8fddd8e29d0a80598427de</string>
+	<string>1:457735200635:ios:cbf3a070ac31d5858427de</string>
 	<key>DATABASE_URL</key>
 	<string>https://rigel-admin.firebaseio.com</string>
 </dict>

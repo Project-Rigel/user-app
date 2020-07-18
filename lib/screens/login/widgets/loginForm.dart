@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rigel/services/auth.dart';
 import 'package:rigel/shared/animations/fade_animation.dart';
 
 class LoginForm extends StatefulWidget {
@@ -10,6 +11,8 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  AuthService auth = AuthService();
+
   bool _autoValidate = false;
   String _name;
   String _surname;
@@ -193,10 +196,10 @@ class _LoginFormState extends State<LoginForm> {
     if (_formKey.currentState.validate()) {
       // No any error in validation
       _formKey.currentState.save();
-      print("Name $_name");
-      print("Pass $_password");
       print("Email $_email");
-      print("Pass $_surname");
+      String displayName = _name + " " + _surname;
+      auth.signUpWithEmail(
+          email: _email, password: _password, name: displayName);
     } else {
       // validation error
       setState(() {

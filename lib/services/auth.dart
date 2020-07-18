@@ -1,4 +1,3 @@
-
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,7 +12,6 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final Firestore _db = Firestore.instance;
   String mVerificationId;
-
 
   // Firebase user one-time fetch
   Future<FirebaseUser> get getUser => _auth.currentUser();
@@ -100,7 +98,8 @@ class AuthService {
           verificationCompleted: (authCredential) =>
               _verificationComplete(authCredential),
           verificationFailed: (authException) => log(authException.message),
-          codeSent: (verificationId, [code]) => _codeSent(verificationId, [code]),
+          codeSent: (verificationId, [code]) =>
+              _codeSent(verificationId, [code]),
           codeAutoRetrievalTimeout: null);
     } catch (error) {
       print(error);
@@ -124,10 +123,17 @@ class AuthService {
   Future signUpWithEmail({
     @required String email,
     @required String password,
+    @required String name,
   }) async {
     try {
       var authResult = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
+      //New User
+      if (authResult.additionalUserInfo.isNewUser) {
+        newUserData(authResult.user, name);
+      }
+      // Update user data
+      updateUserData(authResult.user);
       return authResult.user != null;
     } catch (e) {
       return e.message;
@@ -144,9 +150,14 @@ class AuthService {
   }
 
   /// Creates the User's data in Firestore on first login
-  Future<void> newUserData(FirebaseUser user) {
+  Future<void> newUserData(FirebaseUser user, [String name]) {
     DocumentReference reportRef =
         _db.collection('customers').document(user.uid);
+    if (name != null) {
+      UserUpdateInfo info = new UserUpdateInfo();
+      info.displayName = name;
+      user.updateProfile(info);
+    }
 
     return reportRef.setData(
         {'uid': user.uid, 'creationDate': DateTime.now(), 'verified': false},

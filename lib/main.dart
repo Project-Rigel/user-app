@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
 
         // Named Routes
         routes: {
-          '/': (context) => BussinessScreen(),
+          '/': (context) => LoginScreen(),
           '/verification': (context) => PhoneInputScreen(),
           '/home': (context) => AppBottomNav(),
           '/topics': (context) => BussinessScreen(),

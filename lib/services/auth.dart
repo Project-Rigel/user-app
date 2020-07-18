@@ -107,14 +107,15 @@ class AuthService {
     }
   }
 
-  Future loginWithEmail({
+  Future<FirebaseUser> loginWithEmail({
     @required String email,
     @required String password,
   }) async {
     try {
-      var user = await _auth.signInWithEmailAndPassword(
+      AuthResult result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-      return user != null;
+      FirebaseUser user = result.user;
+      return user;
     } catch (e) {
       return e.message;
     }
@@ -134,7 +135,7 @@ class AuthService {
       }
       // Update user data
       updateUserData(authResult.user);
-      return authResult.user != null;
+      return authResult.user;
     } catch (e) {
       return e.message;
     }

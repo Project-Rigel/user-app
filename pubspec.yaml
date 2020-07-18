@@ -39,6 +39,8 @@ dependencies:
   modal_bottom_sheet: ^0.1.6+1
   table_calendar: ^2.2.3
   simple_animations: ^2.2.1
+  url_launcher: ^5.5.0
+
 
 dev_dependencies:
   flutter_test:

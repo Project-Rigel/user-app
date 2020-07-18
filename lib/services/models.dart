@@ -69,8 +69,8 @@ class Bussiness {
       {this.id,
       this.name,
       this.description,
-      this.phone,
       this.mail,
+      this.phone,
       this.img,
       this.categories});
 
@@ -80,7 +80,7 @@ class Bussiness {
       name: data['name'] ?? '',
       description: data['description'] ?? '',
       mail: data['mail'] ?? '',
-      phone: data['mail'] ?? '',
+      phone: data['phone'] ?? '',
       img: data['img'] ?? 'default.png',
       categories: List.from(data['categories']),
     );

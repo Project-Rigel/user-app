@@ -9,6 +9,7 @@ import 'package:rigel/services/services.dart';
 import 'package:rigel/shared/category_list.dart';
 import 'package:rigel/shared/loader.dart';
 import 'package:rigel/shared/top_container.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class BussinessScreen extends StatefulWidget {
   @override
@@ -122,7 +123,77 @@ class _BussinessScreenState extends State<BussinessScreen> {
                                     ],
                                   ),
                                   SizedBox(height: 15.0),
-                                  CategoryList(categories: bussiness.categories)
+                                  CategoryList(
+                                      categories: bussiness.categories),
+                                  SizedBox(height: 10.0),
+                                  Center(
+                                    child: Text(bussiness.description),
+                                  ),
+                                  SizedBox(height: 10.0),
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: <Widget>[
+                                      Expanded(
+                                        child: FlatButton.icon(
+                                          padding: EdgeInsets.all(10),
+                                          shape: new RoundedRectangleBorder(
+                                              side: BorderSide(
+                                                  color: Theme.of(context)
+                                                      .primaryColor),
+                                              borderRadius:
+                                                  new BorderRadius.circular(
+                                                      10.0)),
+                                          icon: Icon(FontAwesomeIcons.phone,
+                                              color: Theme.of(context)
+                                                  .primaryColor),
+                                          color: Colors.white,
+                                          onPressed: () async {
+                                            String _phone = bussiness.phone;
+                                            _makePhoneCall('tel:$_phone');
+                                          },
+                                          label: Expanded(
+                                            child: Text(bussiness.phone,
+                                                textAlign: TextAlign.center),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: 5.0),
+                                      Expanded(
+                                        child: FlatButton.icon(
+                                          padding: EdgeInsets.all(10),
+                                          shape: new RoundedRectangleBorder(
+                                              side: BorderSide(
+                                                  color: Theme.of(context)
+                                                      .primaryColor),
+                                              borderRadius:
+                                                  new BorderRadius.circular(
+                                                      10.0)),
+                                          icon: Icon(FontAwesomeIcons.mailBulk,
+                                              color: Theme.of(context)
+                                                  .primaryColor),
+                                          color: Colors.white,
+                                          onPressed: () async {
+                                            final Uri _emailLaunchUri = Uri(
+                                                scheme: 'mailto',
+                                                path: bussiness.mail,
+                                                queryParameters: {
+                                                  'subject':
+                                                      'Green&In: Consulta'
+                                                });
+
+                                            launch(_emailLaunchUri.toString());
+                                          },
+                                          label: Expanded(
+                                            child: Text(bussiness.mail,
+                                                textAlign: TextAlign.center),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ],
                               ),
                             ),
@@ -141,5 +212,13 @@ class _BussinessScreenState extends State<BussinessScreen> {
             );
           }
         });
+  }
+
+  Future<void> _makePhoneCall(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

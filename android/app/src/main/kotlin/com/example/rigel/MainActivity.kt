@@ -1,4 +1,4 @@
-package com.rigel.customer
+package com.greenandin.app
 
 import io.flutter.embedding.android.FlutterActivity
 

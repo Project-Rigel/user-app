@@ -18,6 +18,7 @@ class _LoginFormState extends State<LoginForm> {
   String _surname;
   String _email;
   String _password;
+  String _passrepeat;
 
   @override
   Widget build(BuildContext context) {
@@ -115,6 +116,9 @@ class _LoginFormState extends State<LoginForm> {
                       onSaved: (String val) {
                         _password = val;
                       },
+                      onChanged: (String value) {
+                        _password = value;
+                      },
                     ),
                   ),
                   Container(
@@ -127,6 +131,9 @@ class _LoginFormState extends State<LoginForm> {
                           hintStyle: TextStyle(color: Colors.grey[400])),
                       keyboardType: TextInputType.text,
                       validator: validatePassword,
+                      onChanged: (String val) {
+                        _passrepeat = val;
+                      },
                     ),
                   ),
                 ],
@@ -186,10 +193,12 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   String validatePassword(String value) {
-    if (value != _password)
+    if (value != _password) {
+      print(_password);
       return "Passwords doesn't match";
-    else
+    } else {
       return null;
+    }
   }
 
   _sendToServer() {

@@ -156,6 +156,8 @@ class AuthService {
     if (name != null) {
       UserUpdateInfo info = new UserUpdateInfo();
       info.displayName = name;
+      info.photoUrl =
+          "https://firebasestorage.googleapis.com/v0/b/rigel-admin.appspot.com/o/userapp%2Funknown_profile.png?alt=media&token=0dfd930d-60c9-4a8c-be1b-8802f6d9685d";
       user.updateProfile(info);
     }
 

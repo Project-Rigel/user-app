@@ -39,7 +39,7 @@ class QuizScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
+    /* return ChangeNotifierProvider(
       create: (_) => QuizState(),
       child: FutureBuilder(
         future: Document<Quiz>(path: 'quizzes/$quizId').getData(),
@@ -78,7 +78,7 @@ class QuizScreen extends StatelessWidget {
           }
         },
       ),
-    );
+    );*/
   }
 }
 

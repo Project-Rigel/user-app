@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 import '../services/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -60,7 +60,7 @@ class AnimatedProgressbar extends StatelessWidget {
 
 class QuizBadge extends StatelessWidget {
   final String quizId;
-  final Topic topic;
+  final Bussiness topic;
 
   const QuizBadge({Key key, this.quizId, this.topic}) : super(key: key);
 
@@ -82,7 +82,7 @@ class QuizBadge extends StatelessWidget {
 }
 
 class TopicProgress extends StatelessWidget {
-  final Topic topic;
+  final Bussiness topic;
   const TopicProgress({Key key, this.topic}) : super(key: key);
 
   @override
@@ -99,12 +99,12 @@ class TopicProgress extends StatelessWidget {
     );
   }
 
-  Widget _progressCount(Report report, Topic topic) {
+  Widget _progressCount(Report report, Bussiness topic) {
     if (report != null && topic != null) {
       return Padding(
         padding: const EdgeInsets.only(left: 8),
         child: Text(
-          '${report.topics[topic.id]?.length ?? 0} / ${topic?.quizzes?.length ?? 0}',
+          '${report.topics[topic.id]?.length ?? 0} / ${topic?.categories?.length ?? 0}',
           style: TextStyle(fontSize: 10, color: Colors.grey),
         ),
       );
@@ -113,9 +113,9 @@ class TopicProgress extends StatelessWidget {
     }
   }
 
-  double _calculateProgress(Topic topic, Report report) {
+  double _calculateProgress(Bussiness topic, Report report) {
     try {
-      int totalQuizzes = topic.quizzes.length;
+      int totalQuizzes = topic.categories.length;
       int completedQuizzes = report.topics[topic.id].length;
       return completedQuizzes / totalQuizzes;
     } catch (err) {
@@ -123,3 +123,4 @@ class TopicProgress extends StatelessWidget {
     }
   }
 }
+ */

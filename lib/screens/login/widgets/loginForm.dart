@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rigel/services/auth.dart';
 import 'package:rigel/shared/animations/fade_animation.dart';
 
 class LoginForm extends StatefulWidget {
@@ -10,11 +11,14 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  AuthService auth = AuthService();
+
   bool _autoValidate = false;
   String _name;
   String _surname;
   String _email;
   String _password;
+  String _passrepeat;
 
   @override
   Widget build(BuildContext context) {
@@ -112,6 +116,9 @@ class _LoginFormState extends State<LoginForm> {
                       onSaved: (String val) {
                         _password = val;
                       },
+                      onChanged: (String value) {
+                        _password = value;
+                      },
                     ),
                   ),
                   Container(
@@ -124,6 +131,9 @@ class _LoginFormState extends State<LoginForm> {
                           hintStyle: TextStyle(color: Colors.grey[400])),
                       keyboardType: TextInputType.text,
                       validator: validatePassword,
+                      onChanged: (String val) {
+                        _passrepeat = val;
+                      },
                     ),
                   ),
                 ],
@@ -183,20 +193,22 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   String validatePassword(String value) {
-    if (value != _password)
+    if (value != _password) {
+      print(_password);
       return "Passwords doesn't match";
-    else
+    } else {
       return null;
+    }
   }
 
   _sendToServer() {
     if (_formKey.currentState.validate()) {
       // No any error in validation
       _formKey.currentState.save();
-      print("Name $_name");
-      print("Pass $_password");
       print("Email $_email");
-      print("Pass $_surname");
+      String displayName = _name + " " + _surname;
+      auth.signUpWithEmail(
+          email: _email, password: _password, name: displayName);
     } else {
       // validation error
       setState(() {

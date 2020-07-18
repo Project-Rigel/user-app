@@ -81,13 +81,17 @@ class LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  static final emailController = TextEditingController();
+  static final passController = TextEditingController();
   final emailField = TextField(
+    controller: emailController,
     decoration: InputDecoration(
         border: InputBorder.none,
         hintText: "Email",
         hintStyle: TextStyle(color: Colors.grey[400])),
   );
   final passwordField = TextField(
+    controller: passController,
     obscureText: true,
     decoration: InputDecoration(
         border: InputBorder.none,
@@ -252,20 +256,31 @@ class LoginScreenState extends State<LoginScreen> {
                       ),
                       FadeAnimation(
                           2,
-                          Container(
-                            height: 50,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                gradient: LinearGradient(colors: [
-                                  Color.fromRGBO(53, 255, 170, 1),
-                                  Color.fromRGBO(61, 225, 182, .6),
-                                ])),
-                            child: Center(
-                              child: Text(
-                                "Iniciar Sesión",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
+                          InkWell(
+                            onTap: () async {
+                              var user = await auth.loginWithEmail(
+                                  email: emailController.text,
+                                  password: passController.text);
+                              if (user != null) {
+                                Navigator.pushReplacementNamed(
+                                    context, '/home');
+                              }
+                            },
+                            child: Container(
+                              height: 50,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  gradient: LinearGradient(colors: [
+                                    Color.fromRGBO(53, 255, 170, 1),
+                                    Color.fromRGBO(61, 225, 182, .6),
+                                  ])),
+                              child: Center(
+                                child: Text(
+                                  "Iniciar Sesión",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                             ),
                           )),

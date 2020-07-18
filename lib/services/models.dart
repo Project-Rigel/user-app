@@ -5,7 +5,7 @@ class Option {
   String detail;
   bool correct;
 
-  Option({ this.correct, this.value, this.detail });
+  Option({this.correct, this.value, this.detail});
   Option.fromMap(Map data) {
     value = data['value'];
     detail = data['detail'] ?? '';
@@ -13,21 +13,21 @@ class Option {
   }
 }
 
-
 class Question {
   String text;
   List<Option> options;
-  Question({ this.options, this.text });
+  Question({this.options, this.text});
 
   Question.fromMap(Map data) {
     text = data['text'] ?? '';
-    options = (data['options'] as List ?? []).map((v) => Option.fromMap(v)).toList();
+    options =
+        (data['options'] as List ?? []).map((v) => Option.fromMap(v)).toList();
   }
 }
 
 ///// Database Collections
 
-class Quiz { 
+class Quiz {
   String id;
   String title;
   String description;
@@ -35,50 +35,64 @@ class Quiz {
   String topic;
   List<Question> questions;
 
-  Quiz({ this.title, this.questions, this.video, this.description, this.id, this.topic });
+  Quiz(
+      {this.title,
+      this.questions,
+      this.video,
+      this.description,
+      this.id,
+      this.topic});
 
   factory Quiz.fromMap(Map data) {
     return Quiz(
-      id: data['id'] ?? '',
-      title: data['title'] ?? '',
-      topic: data['topic'] ?? '',
-      description: data['description'] ?? '',
-      video: data['video'] ?? '',
-      questions: (data['questions'] as List ?? []).map((v) => Question.fromMap(v)).toList()
-    );
+        id: data['id'] ?? '',
+        title: data['title'] ?? '',
+        topic: data['topic'] ?? '',
+        description: data['description'] ?? '',
+        video: data['video'] ?? '',
+        questions: (data['questions'] as List ?? [])
+            .map((v) => Question.fromMap(v))
+            .toList());
   }
-  
 }
 
-
-class Topic {
+class Bussiness {
   final String id;
-  final String title;
-  final  String description;
+  final String name;
+  final String description;
+  final String mail;
+  final String phone;
   final String img;
-  final List<Quiz> quizzes;
+  final List<String> categories;
 
-  Topic({ this.id, this.title, this.description, this.img, this.quizzes });
+  Bussiness(
+      {this.id,
+      this.name,
+      this.description,
+      this.phone,
+      this.mail,
+      this.img,
+      this.categories});
 
-  factory Topic.fromMap(Map data) {
-    return Topic(
+  factory Bussiness.fromMap(Map data) {
+    return Bussiness(
       id: data['id'] ?? '',
-      title: data['title'] ?? '',
+      name: data['name'] ?? '',
       description: data['description'] ?? '',
+      mail: data['mail'] ?? '',
+      phone: data['mail'] ?? '',
       img: data['img'] ?? 'default.png',
-      quizzes:  (data['quizzes'] as List ?? []).map((v) => Quiz.fromMap(v)).toList(), //data['quizzes'],
+      categories: List.from(data['categories']),
     );
   }
-
 }
-
 
 class Report {
   String uid;
   int total;
   dynamic topics;
 
-  Report({ this.uid, this.topics, this.total });
+  Report({this.uid, this.topics, this.total});
 
   factory Report.fromMap(Map data) {
     return Report(
@@ -87,6 +101,4 @@ class Report {
       topics: data['topics'] ?? {},
     );
   }
-
 }
-

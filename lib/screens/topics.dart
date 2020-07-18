@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 import '../services/services.dart';
 import '../shared/shared.dart';
 import '../screens/screens.dart';
@@ -13,7 +13,7 @@ class TopicsScreen extends StatelessWidget {
       future: Global.topicsRef.getData(),
       builder: (BuildContext context, AsyncSnapshot snap) {
         if (snap.hasData) {
-          List<Topic> topics = snap.data;
+          List<Bussiness> topics = snap.data;
           return Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.deepPurple,
@@ -44,7 +44,7 @@ class TopicsScreen extends StatelessWidget {
 }
 
 class TopicItem extends StatelessWidget {
-  final Topic topic;
+  final Bussiness topic;
   const TopicItem({Key key, this.topic}) : super(key: key);
 
   @override
@@ -77,7 +77,7 @@ class TopicItem extends StatelessWidget {
                       child: Padding(
                         padding: EdgeInsets.only(left: 10, right: 10),
                         child: Text(
-                          topic.title,
+                          topic.name,
                           style: TextStyle(
                               height: 1.5, fontWeight: FontWeight.bold),
                           overflow: TextOverflow.fade,
@@ -100,7 +100,7 @@ class TopicItem extends StatelessWidget {
 }
 
 class TopicScreen extends StatelessWidget {
-  final Topic topic;
+  final Bussiness topic;
 
   TopicScreen({this.topic});
 
@@ -117,7 +117,7 @@ class TopicScreen extends StatelessWidget {
               width: MediaQuery.of(context).size.width),
         ),
         Text(
-          topic.title,
+          topic.name,
           style:
               TextStyle(height: 2, fontSize: 20, fontWeight: FontWeight.bold),
         ),
@@ -135,14 +135,14 @@ class TopicScreen extends StatelessWidget {
 }
 
 class QuizList extends StatelessWidget {
-  final Topic topic;
+  final Bussiness topic;
   QuizList({Key key, this.topic});
 
   @override
   Widget build(BuildContext context) {
     
     return Column(
-        children: topic.quizzes.map((quiz) {
+        children: topic.categories.map((quiz) {
       return Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
         elevation: 4,
@@ -177,7 +177,7 @@ class QuizList extends StatelessWidget {
 }
 
 class TopicDrawer extends StatelessWidget {
-  final List<Topic> topics;
+  final List<Bussiness> topics;
   TopicDrawer({Key key, this.topics});
 
   @override
@@ -187,14 +187,14 @@ class TopicDrawer extends StatelessWidget {
           shrinkWrap: true,
           itemCount: topics.length,
           itemBuilder: (BuildContext context, int idx) {
-            Topic topic = topics[idx];
+            Bussiness topic = topics[idx];
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
                   padding: EdgeInsets.only(top: 10, left: 10),
                   child: Text(
-                    topic.title,
+                    topic.name,
                     // textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: 20,
@@ -211,3 +211,4 @@ class TopicDrawer extends StatelessWidget {
     );
   }
 }
+ */

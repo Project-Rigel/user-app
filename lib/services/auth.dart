@@ -98,8 +98,8 @@ class AuthService {
           verificationCompleted: (authCredential) =>
               _verificationComplete(authCredential),
           verificationFailed: (authException) => log(authException.message),
-          codeSent: (verificationId, [code]) =>
-              _codeSent(verificationId, [code]),
+          codeSent: (String verificationId, [int code]) =>
+              _codeSent(verificationId, code),
           codeAutoRetrievalTimeout: null);
     } catch (error) {
       print(error);
@@ -191,7 +191,16 @@ class AuthService {
     FirebaseAuth.instance.signInWithCredential(authCredential);
   }
 
-  _codeSent(String verificationId, List<int> forceResendingToken) {
+  _codeSent(String verificationId, [int forceResendingToken]) {
     mVerificationId = verificationId;
+  }
+  phoneVerification(String smsCode) async {
+    print(mVerificationId);
+    final AuthCredential credential = PhoneAuthProvider.getCredential(
+      verificationId: mVerificationId,
+      smsCode: smsCode,
+    );
+    FirebaseUser actualUser = await _auth.currentUser();
+    actualUser.linkWithCredential(credential);
   }
 }

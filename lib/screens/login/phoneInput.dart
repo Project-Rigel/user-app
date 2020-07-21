@@ -137,7 +137,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen>
                                       vertical: 8.0, horizontal: 30),
                                   child: PinCodeTextField(
                                     autoDisposeControllers: false,
-                                    length: 5,
+                                    length: 6,
                                     obsecureText: false,
                                     animationType: AnimationType.fade,
                                     pinTheme: PinTheme(
@@ -193,14 +193,15 @@ class _PhoneInputScreenState extends State<PhoneInputScreen>
                     2,
                     InkWell(
                       onTap: () async {
-                        if (currentText.length != 6 ||
-                            currentText != "towtow") {
+                        if (currentText.length != 6) {
                           errorController.add(ErrorAnimationType
                               .shake); // Triggering error shake animation
                           setState(() {
                             hasError = true;
                           });
                         } else {
+
+                          await auth.phoneVerification(currentText);
                           setState(() {
                             hasError = false;
                           });

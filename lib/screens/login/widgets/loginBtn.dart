@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rigel/services/auth.dart';
 
 class LoginButton extends StatelessWidget {
   final Color color;
@@ -12,6 +13,7 @@ class LoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AuthService auth = AuthService();
     return Container(
       height: 50,
       margin: EdgeInsets.only(bottom: 10),
@@ -25,7 +27,16 @@ class LoginButton extends StatelessWidget {
         onPressed: () async {
           var user = await loginMethod();
           if (user != null) {
-            Navigator.pushReplacementNamed(context, '/home');
+            auth.isUserVerified(user).then((val) {
+              if (val == true) {
+                Navigator.pushReplacementNamed(context, '/home');
+              } else {
+                Navigator.pushReplacementNamed(context, "/verification");
+              }
+              print("success");
+            }).catchError((error, stackTrace) {
+              print("outer: $error");
+            });
           }
         },
         label: Expanded(

@@ -200,8 +200,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen>
                             hasError = true;
                           });
                         } else {
-
-                          await auth.phoneVerification(currentText);
+                          await auth.phoneVerification(currentText, context);
                           setState(() {
                             hasError = false;
                           });
@@ -322,10 +321,10 @@ class _PhoneInputScreenState extends State<PhoneInputScreen>
                     2,
                     InkWell(
                       onTap: () async {
-                        if (user != null) {
-                          auth.phone2Factor(myController.text);
-                          gotoVerification();
-                        }
+                        //if (user != null) {
+                        auth.phone2Factor(myController.text);
+                        gotoVerification();
+                        //}
                       },
                       child: Container(
                         height: 50,

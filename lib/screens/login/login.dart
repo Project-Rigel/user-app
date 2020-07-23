@@ -25,7 +25,7 @@ class LoginScreenState extends State<LoginScreen> {
     super.initState();
     auth.getUser.then((user) {
       if (user != null) {
-        isUserVerified(user).then((val) {
+        auth.isUserVerified(user).then((val) {
           if (val == true) {
             Navigator.pushReplacementNamed(context, '/home');
           } else {
@@ -37,15 +37,6 @@ class LoginScreenState extends State<LoginScreen> {
         });
       } //TODO modal saying service not available
     });
-  }
-
-  Future<bool> isUserVerified(FirebaseUser user) async {
-    DocumentSnapshot snapshot =
-        await _db.collection('customers').document(user.uid).get();
-    bool verified = await snapshot['verified'];
-
-    log(verified.runtimeType.toString());
-    return verified;
   }
 
   Widget _divider() {
@@ -262,8 +253,18 @@ class LoginScreenState extends State<LoginScreen> {
                                   email: emailController.text,
                                   password: passController.text);
                               if (user != null) {
-                                Navigator.pushReplacementNamed(
-                                    context, '/home');
+                                auth.isUserVerified(user).then((val) {
+                                  if (val == true) {
+                                    Navigator.pushReplacementNamed(
+                                        context, '/home');
+                                  } else {
+                                    Navigator.pushReplacementNamed(
+                                        context, "/verification");
+                                  }
+                                  print("success");
+                                }).catchError((error, stackTrace) {
+                                  print("outer: $error");
+                                });
                               }
                             },
                             child: Container(
@@ -335,8 +336,18 @@ class LoginScreenState extends State<LoginScreen> {
                                     FirebaseUser user =
                                         await auth.appleSignIn();
                                     if (user != null) {
-                                      Navigator.pushReplacementNamed(
-                                          context, '/topics');
+                                      auth.isUserVerified(user).then((val) {
+                                        if (val == true) {
+                                          Navigator.pushReplacementNamed(
+                                              context, '/home');
+                                        } else {
+                                          Navigator.pushReplacementNamed(
+                                              context, "/verification");
+                                        }
+                                        print("success");
+                                      }).catchError((error, stackTrace) {
+                                        print("outer: $error");
+                                      });
                                     }
                                   },
                                 );

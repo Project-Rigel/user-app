@@ -130,7 +130,7 @@ class _BussinessScreenState extends State<BussinessScreen> {
                                     child: Text(bussiness.description),
                                   ),
                                   SizedBox(height: 10.0),
-                                  Row(
+                                  Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     mainAxisAlignment:
@@ -160,7 +160,7 @@ class _BussinessScreenState extends State<BussinessScreen> {
                                           ),
                                         ),
                                       ),
-                                      SizedBox(width: 5.0),
+                                      SizedBox(height: 5.0),
                                       Expanded(
                                         child: FlatButton.icon(
                                           padding: EdgeInsets.all(10),

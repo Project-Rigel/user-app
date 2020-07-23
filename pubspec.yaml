@@ -30,6 +30,7 @@ dependencies:
 
   rxdart: 0.23.1
   provider: 4.0.5
+  shared_preferences: ^0.5.8
 
   font_awesome_flutter: 8.8.1
   google_fonts: ^1.1.0
@@ -63,6 +64,8 @@ flutter:
     - assets/flutter_clip-2.png
     - assets/gni_logo_mono.png
     - assets/gni_logo_white.png
+    - assets/message.png
+    - assets/phone_verification.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

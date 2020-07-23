@@ -130,69 +130,52 @@ class _BussinessScreenState extends State<BussinessScreen> {
                                     child: Text(bussiness.description),
                                   ),
                                   SizedBox(height: 10.0),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: <Widget>[
-                                      Expanded(
-                                        child: FlatButton.icon(
-                                          padding: EdgeInsets.all(10),
-                                          shape: new RoundedRectangleBorder(
-                                              side: BorderSide(
-                                                  color: Theme.of(context)
-                                                      .primaryColor),
-                                              borderRadius:
-                                                  new BorderRadius.circular(
-                                                      10.0)),
-                                          icon: Icon(FontAwesomeIcons.phone,
-                                              color: Theme.of(context)
-                                                  .primaryColor),
-                                          color: Colors.white,
-                                          onPressed: () async {
-                                            String _phone = bussiness.phone;
-                                            _makePhoneCall('tel:$_phone');
-                                          },
-                                          label: Expanded(
-                                            child: Text(bussiness.phone,
-                                                textAlign: TextAlign.center),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(height: 5.0),
-                                      Expanded(
-                                        child: FlatButton.icon(
-                                          padding: EdgeInsets.all(10),
-                                          shape: new RoundedRectangleBorder(
-                                              side: BorderSide(
-                                                  color: Theme.of(context)
-                                                      .primaryColor),
-                                              borderRadius:
-                                                  new BorderRadius.circular(
-                                                      10.0)),
-                                          icon: Icon(FontAwesomeIcons.mailBulk,
-                                              color: Theme.of(context)
-                                                  .primaryColor),
-                                          color: Colors.white,
-                                          onPressed: () async {
-                                            final Uri _emailLaunchUri = Uri(
-                                                scheme: 'mailto',
-                                                path: bussiness.mail,
-                                                queryParameters: {
-                                                  'subject':
-                                                      'Green&In: Consulta'
-                                                });
+                                  FlatButton.icon(
+                                    padding: EdgeInsets.all(10),
+                                    shape: new RoundedRectangleBorder(
+                                        side: BorderSide(
+                                            color:
+                                                Theme.of(context).primaryColor),
+                                        borderRadius:
+                                            new BorderRadius.circular(10.0)),
+                                    icon: Icon(FontAwesomeIcons.phone,
+                                        color: Theme.of(context).primaryColor),
+                                    color: Colors.white,
+                                    onPressed: () async {
+                                      String _phone = bussiness.phone;
+                                      _makePhoneCall('tel:$_phone');
+                                    },
+                                    label: Expanded(
+                                      child: Text(bussiness.phone,
+                                          textAlign: TextAlign.center),
+                                    ),
+                                  ),
+                                  SizedBox(height: 5.0),
+                                  FlatButton.icon(
+                                    padding: EdgeInsets.all(10),
+                                    shape: new RoundedRectangleBorder(
+                                        side: BorderSide(
+                                            color:
+                                                Theme.of(context).primaryColor),
+                                        borderRadius:
+                                            new BorderRadius.circular(10.0)),
+                                    icon: Icon(FontAwesomeIcons.mailBulk,
+                                        color: Theme.of(context).primaryColor),
+                                    color: Colors.white,
+                                    onPressed: () async {
+                                      final Uri _emailLaunchUri = Uri(
+                                          scheme: 'mailto',
+                                          path: bussiness.mail,
+                                          queryParameters: {
+                                            'subject': 'Green&In: Consulta'
+                                          });
 
-                                            launch(_emailLaunchUri.toString());
-                                          },
-                                          label: Expanded(
-                                            child: Text(bussiness.mail,
-                                                textAlign: TextAlign.center),
-                                          ),
-                                        ),
-                                      )
-                                    ],
+                                      launch(_emailLaunchUri.toString());
+                                    },
+                                    label: Expanded(
+                                      child: Text(bussiness.mail,
+                                          textAlign: TextAlign.center),
+                                    ),
                                   ),
                                 ],
                               ),

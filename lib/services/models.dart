@@ -87,6 +87,29 @@ class Bussiness {
   }
 }
 
+enum Gender { male, female, undefined }
+
+class Product {
+  String description;
+  int price;
+  String name;
+  String img;
+  Gender gender;
+
+  Product({this.description, this.price, this.name, this.img, this.gender});
+
+  factory Product.fromMap(Map data) {
+    return Product(
+      description: data['description'] ?? "No description set",
+      price: data['price'] ?? null,
+      name: data['name'] ?? "No name set",
+      img: data['img'] ??
+          "https://firebasestorage.googleapis.com/v0/b/rigel-admin.appspot.com/o/userapp%2Funknown_profile.png?alt=media&token=0dfd930d-60c9-4a8c-be1b-8802f6d9685d",
+      gender: data['gender'] ?? Gender.undefined,
+    );
+  }
+}
+
 class Report {
   String uid;
   int total;

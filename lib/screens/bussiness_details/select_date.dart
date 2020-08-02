@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rigel/screens/theme/light_colors.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:intl/date_symbol_data_local.dart';
-
 
 final Map<DateTime, List> _holidays = {
   DateTime(2020, 6, 22): ['New Year\'s Day'],
@@ -21,7 +19,8 @@ class SelectDateModal extends StatefulWidget {
   _SelectDateModalState createState() => _SelectDateModalState();
 }
 
-class _SelectDateModalState extends State<SelectDateModal> with TickerProviderStateMixin {
+class _SelectDateModalState extends State<SelectDateModal>
+    with TickerProviderStateMixin {
   Map<DateTime, List> _events;
   List _selectedEvents;
   AnimationController _animationController;
@@ -33,21 +32,57 @@ class _SelectDateModalState extends State<SelectDateModal> with TickerProviderSt
     final _selectedDay = DateTime.now();
 
     _events = {
-      _selectedDay.subtract(Duration(days: 30)): ['Event A0', 'Event B0', 'Event C0'],
+      _selectedDay.subtract(Duration(days: 30)): [
+        'Event A0',
+        'Event B0',
+        'Event C0'
+      ],
       _selectedDay.subtract(Duration(days: 27)): ['Event A1'],
-      _selectedDay.subtract(Duration(days: 20)): ['Event A2', 'Event B2', 'Event C2', 'Event D2'],
+      _selectedDay.subtract(Duration(days: 20)): [
+        'Event A2',
+        'Event B2',
+        'Event C2',
+        'Event D2'
+      ],
       _selectedDay.subtract(Duration(days: 16)): ['Event A3', 'Event B3'],
-      _selectedDay.subtract(Duration(days: 10)): ['Event A4', 'Event B4', 'Event C4'],
-      _selectedDay.subtract(Duration(days: 4)): ['Event A5', 'Event B5', 'Event C5'],
+      _selectedDay.subtract(Duration(days: 10)): [
+        'Event A4',
+        'Event B4',
+        'Event C4'
+      ],
+      _selectedDay.subtract(Duration(days: 4)): [
+        'Event A5',
+        'Event B5',
+        'Event C5'
+      ],
       _selectedDay.subtract(Duration(days: 2)): ['Event A6', 'Event B6'],
       _selectedDay: ['Event A7', 'Event B7', 'Event C7', 'Event D7'],
-      _selectedDay.add(Duration(days: 1)): ['Event A8', 'Event B8', 'Event C8', 'Event D8'],
-      _selectedDay.add(Duration(days: 3)): Set.from(['Event A9', 'Event A9', 'Event B9']).toList(),
-      _selectedDay.add(Duration(days: 7)): ['Event A10', 'Event B10', 'Event C10'],
+      _selectedDay.add(Duration(days: 1)): [
+        'Event A8',
+        'Event B8',
+        'Event C8',
+        'Event D8'
+      ],
+      _selectedDay.add(Duration(days: 3)):
+          Set.from(['Event A9', 'Event A9', 'Event B9']).toList(),
+      _selectedDay.add(Duration(days: 7)): [
+        'Event A10',
+        'Event B10',
+        'Event C10'
+      ],
       _selectedDay.add(Duration(days: 11)): ['Event A11', 'Event B11'],
-      _selectedDay.add(Duration(days: 17)): ['Event A12', 'Event B12', 'Event C12', 'Event D12'],
+      _selectedDay.add(Duration(days: 17)): [
+        'Event A12',
+        'Event B12',
+        'Event C12',
+        'Event D12'
+      ],
       _selectedDay.add(Duration(days: 22)): ['Event A13', 'Event B13'],
-      _selectedDay.add(Duration(days: 26)): ['Event A14', 'Event B14', 'Event C14'],
+      _selectedDay.add(Duration(days: 26)): [
+        'Event A14',
+        'Event B14',
+        'Event C14'
+      ],
     };
 
     _selectedEvents = _events[_selectedDay] ?? [];
@@ -75,11 +110,13 @@ class _SelectDateModalState extends State<SelectDateModal> with TickerProviderSt
     });
   }
 
-  void _onVisibleDaysChanged(DateTime first, DateTime last, CalendarFormat format) {
+  void _onVisibleDaysChanged(
+      DateTime first, DateTime last, CalendarFormat format) {
     print('CALLBACK: _onVisibleDaysChanged');
   }
 
-  void _onCalendarCreated(DateTime first, DateTime last, CalendarFormat format) {
+  void _onCalendarCreated(
+      DateTime first, DateTime last, CalendarFormat format) {
     print('CALLBACK: _onCalendarCreated');
   }
 
@@ -108,18 +145,19 @@ class _SelectDateModalState extends State<SelectDateModal> with TickerProviderSt
       holidays: _holidays,
       startingDayOfWeek: StartingDayOfWeek.monday,
       calendarStyle: CalendarStyle(
-        selectedColor: LightColors.kDarkBlue,
-        todayColor: Colors.black45,
+        selectedColor: Theme.of(context).primaryColorLight,
+        todayColor: Theme.of(context).primaryColor,
         markersColor: Colors.transparent,
         outsideDaysVisible: false,
-        weekendStyle: TextStyle().copyWith(color:  Colors.black),
+        weekendStyle: TextStyle().copyWith(color: Colors.black),
         //holidayStyle: TextStyle(color: Colors.black)
       ),
       daysOfWeekStyle: DaysOfWeekStyle(
         weekendStyle: TextStyle().copyWith(color: Colors.black),
       ),
       headerStyle: HeaderStyle(
-        formatButtonTextStyle: TextStyle().copyWith(color: Colors.white, fontSize: 15.0),
+        formatButtonTextStyle:
+            TextStyle().copyWith(color: Colors.white, fontSize: 15.0),
         formatButtonDecoration: BoxDecoration(
           color: LightColors.kDarkBlue,
           borderRadius: BorderRadius.circular(16.0),
@@ -134,7 +172,7 @@ class _SelectDateModalState extends State<SelectDateModal> with TickerProviderSt
   // More advanced TableCalendar configuration (using Builders & Styles)
   Widget _buildTableCalendarWithBuilders() {
     return TableCalendar(
-      locale: 'pl_PL',
+      locale: 'es_Es',
       calendarController: _calendarController,
       events: _events,
       holidays: _holidays,
@@ -156,7 +194,7 @@ class _SelectDateModalState extends State<SelectDateModal> with TickerProviderSt
       ),
       headerStyle: HeaderStyle(
         centerHeaderTitle: true,
-        formatButtonVisible: false,
+        formatButtonVisible: true,
       ),
       builders: CalendarBuilders(
         selectedDayBuilder: (context, date, _) {
@@ -230,7 +268,9 @@ class _SelectDateModalState extends State<SelectDateModal> with TickerProviderSt
         shape: BoxShape.rectangle,
         color: _calendarController.isSelected(date)
             ? Colors.brown[500]
-            : _calendarController.isToday(date) ? Colors.brown[300] : Colors.blue[400],
+            : _calendarController.isToday(date)
+                ? Colors.brown[300]
+                : Colors.blue[400],
       ),
       width: 16.0,
       height: 16.0,
@@ -258,16 +298,17 @@ class _SelectDateModalState extends State<SelectDateModal> with TickerProviderSt
     return ListView(
       children: _selectedEvents
           .map((event) => Container(
-        decoration: BoxDecoration(
-          border: Border.all(width: 0.8),
-          borderRadius: BorderRadius.circular(12.0),
-        ),
-        margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-        child: ListTile(
-          title: Text(event.toString()),
-          onTap: () => print('$event tapped!'),
-        ),
-      ))
+                decoration: BoxDecoration(
+                  border: Border.all(width: 0.8),
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                child: ListTile(
+                  title: Text(event.toString()),
+                  onTap: () => print('$event tapped!'),
+                ),
+              ))
           .toList(),
     );
   }

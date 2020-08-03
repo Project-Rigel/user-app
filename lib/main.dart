@@ -8,12 +8,19 @@ import 'package:rigel/shared/bottom_nav.dart';
 import 'services/services.dart';
 import 'screens/screens.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 
-void main() => runApp(MyApp());
+//void main() => runApp(MyApp());
+void main() {
+  initializeDateFormatting("es").then((_) => runApp(MyApp()));
+}
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    print(new DateFormat.yMMMd("es").format(new DateTime(2019, 12, 06)));
+    print("HOOLA");
     return MultiProvider(
       providers: [
         StreamProvider<Report>.value(value: Global.reportRef.documentStream),

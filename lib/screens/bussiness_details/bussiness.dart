@@ -12,6 +12,8 @@ import 'package:rigel/shared/top_container.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
+import 'bottomSliderNav.dart';
+
 class BussinessScreen extends StatefulWidget {
   @override
   _BussinessScreenState createState() => _BussinessScreenState();
@@ -61,10 +63,8 @@ class _BussinessScreenState extends State<BussinessScreen> {
                     onPressed: () async {
                       showBarModalBottomSheet(
                         context: context,
-                        builder: (context, scrollController) => Container(
-                            child: SelectDateModal(
-                          title: "TEST",
-                        )),
+                        builder: (context, scrollController) =>
+                            Container(child: BottomSliderNav()),
                       );
                     },
                   ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rigel/screens/theme/light_colors.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 
 final Map<DateTime, List> _holidays = {
   DateTime(2020, 6, 22): ['New Year\'s Day'],
@@ -25,6 +26,9 @@ class _SelectDateModalState extends State<SelectDateModal>
   List _selectedEvents;
   AnimationController _animationController;
   CalendarController _calendarController;
+  final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
+    functionName: 'getAvaliableDaysInMonth',
+  );
 
   @override
   void initState() {
@@ -237,6 +241,14 @@ class _SelectDateModalState extends State<SelectDateModal>
                 child: _buildEventsMarker(date, events),
               ),
             );
+          } else {
+            print("AQUIIUIUUIUI");
+            children.add(
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Text("No hay nada disponible este día"),
+              ),
+            );
           }
 
           if (holidays.isNotEmpty) {
@@ -295,21 +307,25 @@ class _SelectDateModalState extends State<SelectDateModal>
   }
 
   Widget _buildEventList() {
-    return ListView(
-      children: _selectedEvents
-          .map((event) => Container(
-                decoration: BoxDecoration(
-                  border: Border.all(width: 0.8),
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                child: ListTile(
-                  title: Text(event.toString()),
-                  onTap: () => print('$event tapped!'),
-                ),
-              ))
-          .toList(),
-    );
+    if (_selectedEvents.isNotEmpty) {
+      return ListView(
+        children: _selectedEvents
+            .map((event) => Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 0.8),
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  margin: const EdgeInsets.symmetric(
+                      horizontal: 8.0, vertical: 4.0),
+                  child: ListTile(
+                    title: Text(event.toString()),
+                    onTap: () => print('$event tapped!'),
+                  ),
+                ))
+            .toList(),
+      );
+    } else {
+      return Text("No hay nada disponible este día");
+    }
   }
 }

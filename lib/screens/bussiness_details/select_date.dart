@@ -1,14 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:rigel/screens/theme/light_colors.dart';
+import 'package:rigel/shared/loader.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 
 final Map<DateTime, List> _holidays = {
-  DateTime(2020, 6, 22): ['New Year\'s Day'],
-  DateTime(2019, 1, 6): ['Epiphany'],
-  DateTime(2019, 2, 14): ['Valentine\'s Day'],
-  DateTime(2019, 4, 21): ['Easter Sunday'],
-  DateTime(2019, 4, 22): ['Easter Monday'],
+  DateTime(2020, 8, 26): ['Cerrado'],
+  DateTime(2020, 8, 27): ['Cerrado'],
+  DateTime(2020, 8, 28): ['Cerrado'],
+  DateTime(2020, 8, 1): ['Vacaciones'],
 };
 
 class SelectDateModal extends StatefulWidget {
@@ -24,24 +26,65 @@ class _SelectDateModalState extends State<SelectDateModal>
     with TickerProviderStateMixin {
   Map<DateTime, List> _events;
   List _selectedEvents;
+  List<String> openDays;
   AnimationController _animationController;
   CalendarController _calendarController;
-  final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
+  final HttpsCallable callableDays =
+      CloudFunctions(app: FirebaseApp.instance, region: "europe-west1")
+          .getHttpsCallable(
     functionName: 'getAvaliableDaysInMonth',
   );
+  final HttpsCallable callableTimes =
+      CloudFunctions(app: FirebaseApp.instance, region: "europe-west1")
+          .getHttpsCallable(
+    functionName: 'getAvaliableTimeIntervals',
+  );
+
+  testDaysMethod() async {
+    var response = await callableDays.call(<String, dynamic>{
+      'month': DateTime.now().month,
+      'agendaId': 'AZNVcZzTz5F9yLkxx96h',
+      'businessId': 'gpVwyDZEsgmVWyaBuwKx',
+      'productId': '5C3ymeILXBSH7ncaryTU'
+    });
+    if (response != null) {
+      return response.data;
+    }
+    return null;
+  }
+
+  testTimesMethod(DateTime day) async {
+    var response = await callableTimes.call(<String, dynamic>{
+      'timestamp': day.toIso8601String(),
+      'agendaId': 'AZNVcZzTz5F9yLkxx96h',
+      'businessId': 'gpVwyDZEsgmVWyaBuwKx',
+      'productId': '5C3ymeILXBSH7ncaryTU'
+    });
+    if (response != null) {
+      print(response.data);
+      return response.data;
+    }
+    return null;
+  }
 
   @override
-  void initState() {
+  initState() {
     super.initState();
     final _selectedDay = DateTime.now();
-
+    testTimesMethod(_selectedDay);
     _events = {
+      _selectedDay: [
+        '09:00',
+        '14:00',
+        '16:00',
+        '20:00',
+      ],
       _selectedDay.subtract(Duration(days: 30)): [
         'Event A0',
         'Event B0',
         'Event C0'
       ],
-      _selectedDay.subtract(Duration(days: 27)): ['Event A1'],
+      _selectedDay.subtract(Duration(days: 23)): ['Event A1'],
       _selectedDay.subtract(Duration(days: 20)): [
         'Event A2',
         'Event B2',
@@ -60,7 +103,6 @@ class _SelectDateModalState extends State<SelectDateModal>
         'Event C5'
       ],
       _selectedDay.subtract(Duration(days: 2)): ['Event A6', 'Event B6'],
-      _selectedDay: ['Event A7', 'Event B7', 'Event C7', 'Event D7'],
       _selectedDay.add(Duration(days: 1)): [
         'Event A8',
         'Event B8',
@@ -127,16 +169,29 @@ class _SelectDateModalState extends State<SelectDateModal>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          // Switch out 2 lines below to play with TableCalendar's settings
-          //-----------------------
-          _buildTableCalendar(),
-          // _buildTableCalendarWithBuilders(),
-          const SizedBox(height: 8.0),
-          Expanded(child: _buildEventList()),
-        ],
+      body: FutureBuilder(
+        future: testDaysMethod(),
+        builder: (context, snapshot) {
+          if (snapshot.data != null) {
+            return Column(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                // Switch out 2 lines below to play with TableCalendar's settings
+                //-----------------------
+                _buildTableCalendar(),
+                // _buildTableCalendarWithBuilders(),
+                const SizedBox(height: 8.0),
+                Expanded(
+                    child: Container(
+                  margin: EdgeInsets.all(15),
+                  child: _buildEventList(),
+                )),
+              ],
+            );
+          } else {
+            return LoadingScreen();
+          }
+        },
       ),
     );
   }
@@ -144,10 +199,16 @@ class _SelectDateModalState extends State<SelectDateModal>
   // Simple TableCalendar configuration (using Styles)
   Widget _buildTableCalendar() {
     return TableCalendar(
+      locale: 'es_Es',
       calendarController: _calendarController,
       events: _events,
       holidays: _holidays,
       startingDayOfWeek: StartingDayOfWeek.monday,
+      availableCalendarFormats: const {
+        CalendarFormat.month: 'Més',
+        CalendarFormat.twoWeeks: '2 Semanas',
+        CalendarFormat.week: 'Semana',
+      },
       calendarStyle: CalendarStyle(
         selectedColor: Theme.of(context).primaryColorLight,
         todayColor: Theme.of(context).primaryColor,
@@ -163,7 +224,7 @@ class _SelectDateModalState extends State<SelectDateModal>
         formatButtonTextStyle:
             TextStyle().copyWith(color: Colors.white, fontSize: 15.0),
         formatButtonDecoration: BoxDecoration(
-          color: LightColors.kDarkBlue,
+          color: Theme.of(context).primaryColor,
           borderRadius: BorderRadius.circular(16.0),
         ),
       ),
@@ -308,24 +369,31 @@ class _SelectDateModalState extends State<SelectDateModal>
 
   Widget _buildEventList() {
     if (_selectedEvents.isNotEmpty) {
-      return ListView(
+      return GridView.count(
+        primary: false,
+        childAspectRatio: 3.0,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+        crossAxisCount: 2,
         children: _selectedEvents
-            .map((event) => Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 0.8),
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-                  margin: const EdgeInsets.symmetric(
-                      horizontal: 8.0, vertical: 4.0),
-                  child: ListTile(
-                    title: Text(event.toString()),
-                    onTap: () => print('$event tapped!'),
+            .map((event) => FlatButton(
+                  padding: EdgeInsets.all(10),
+                  shape: new RoundedRectangleBorder(
+                      side: BorderSide(color: Theme.of(context).primaryColor),
+                      borderRadius: new BorderRadius.circular(10.0)),
+                  color: Colors.white,
+                  onPressed: () => print('$event tapped!'),
+                  child: Expanded(
+                    child: Text('$event', textAlign: TextAlign.center),
                   ),
                 ))
             .toList(),
       );
     } else {
-      return Text("No hay nada disponible este día");
+      return Text(
+        "No hay nada disponible este día",
+        style: TextStyle(fontWeight: FontWeight.w500),
+      );
     }
   }
 }

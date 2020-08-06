@@ -26,12 +26,43 @@ class LoginButton extends StatelessWidget {
           var user = await loginMethod();
           if (user != null) {
             Navigator.pushReplacementNamed(context, '/home');
+          } else {
+            showAlertDialog(context);
           }
         },
         label: Expanded(
           child: Text('$text', textAlign: TextAlign.center),
         ),
       ),
+    );
+  }
+
+  showAlertDialog(BuildContext context) {
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Error",
+          style: TextStyle(color: Color.fromRGBO(61, 225, 182, .6))),
+      content:
+          Text("Algo ha salido mal, prueba otro método de inicio de sesión"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

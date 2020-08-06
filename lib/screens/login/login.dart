@@ -264,6 +264,8 @@ class LoginScreenState extends State<LoginScreen> {
                               if (user != null) {
                                 Navigator.pushReplacementNamed(
                                     context, '/home');
+                              } else {
+                                showAlertDialog(context);
                               }
                             },
                             child: Container(
@@ -337,6 +339,8 @@ class LoginScreenState extends State<LoginScreen> {
                                     if (user != null) {
                                       Navigator.pushReplacementNamed(
                                           context, '/topics');
+                                    } else {
+                                      showAlertDialog(context);
                                     }
                                   },
                                 );
@@ -399,68 +403,35 @@ class LoginScreenState extends State<LoginScreen> {
           ),
         ));
   }
-  /*@override
-  
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-          padding: EdgeInsets.all(30),
-          decoration: BoxDecoration(),
-          child: SingleChildScrollView(
-            padding: EdgeInsets.all(10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                FlutterLogo(
-                  size: 150,
-                ),
-                SizedBox(height: 5.0),
-                Text(
-                  'Rigel',
-                  style: Theme.of(context).textTheme.headline,
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 30.0),
-                LoginForm(),
-                SizedBox(height: 25.0),
-                LoginButton(
-                  text: 'LOGIN',
-                  icon: FontAwesomeIcons.signInAlt,
-                  color: Colors.black45,
-                  //loginMethod: auth.loginWithEmail(),
-                ),
-                _divider(),
-                LoginButton(
-                  text: 'LOGIN WITH GOOGLE',
-                  icon: FontAwesomeIcons.google,
-                  color: Colors.black45,
-                  loginMethod: auth.googleSignIn,
-                ),
-                SizedBox(height: 25.0),
-                FutureBuilder<Object>(
-                  future: auth.appleSignInAvailable,
-                  builder: (context, snapshot) {
-                    if (snapshot.data == true) {
-                      return AppleSignInButton(
-                        onPressed: () async {
-                          FirebaseUser user = await auth.appleSignIn();
-                          if (user != null) {
-                            Navigator.pushReplacementNamed(context, '/topics');
-                          }
-                        },
-                      );
-                    } else {
-                      return Container();
-                    }
-                  },
-                ),
-                LoginButton(
-                    text: 'Continue as Guest', loginMethod: auth.anonLogin),
-                _createAccountLabel()
-              ],
-            ),
-          )),
+
+  showAlertDialog(BuildContext context) {
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text(
+        "OK",
+        style: TextStyle(color: Color.fromRGBO(61, 225, 182, .6)),
+      ),
+      onPressed: () {
+        Navigator.pop(context);
+      },
     );
-  }*/
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Error"),
+      content: Text(
+          "Algo ha salido mal, prueba otro método de inicio de sesión si el error persiste"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 }

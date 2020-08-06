@@ -117,11 +117,11 @@ class AuthService {
       FirebaseUser user = result.user;
       return user;
     } catch (e) {
-      return e.message;
+      return null;
     }
   }
 
-  Future signUpWithEmail({
+  Future<FirebaseUser> signUpWithEmail({
     @required String email,
     @required String password,
     @required String name,
@@ -194,6 +194,7 @@ class AuthService {
   _codeSent(String verificationId, [int forceResendingToken]) {
     mVerificationId = verificationId;
   }
+
   phoneVerification(String smsCode) async {
     print(mVerificationId);
     final AuthCredential credential = PhoneAuthProvider.getCredential(

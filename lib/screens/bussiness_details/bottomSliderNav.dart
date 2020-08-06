@@ -1,13 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:rigel/screens/bussiness_details/successDating.dart';
+import 'package:rigel/services/models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rigel/shared/commonBtn.dart';
 import 'package:rigel/shared/shared.dart';
 import 'select_date.dart';
 
 class BottomSliderNav extends StatelessWidget {
-  BottomSliderNav({Key key}) : super(key: key);
+  BottomSliderNav({Key key, this.business}) : super(key: key);
   final String bussinessId = "gpVwyDZEsgmVWyaBuwKx";
+  final Bussiness business;
+  var timeSelected = "";
 
   PageController _controller =
       new PageController(initialPage: 0, viewportFraction: 1.0);
@@ -21,12 +25,20 @@ class BottomSliderNav extends StatelessWidget {
     );
   }
 
-  gotoProductSelection() {
+  gotoProductSelection(PageController controller) {
     //controller_minus1To0.reverse(from: 0.0);
-    _controller.animateToPage(
+    controller.animateToPage(
       0,
       duration: Duration(milliseconds: 800),
       curve: Curves.bounceOut,
+    );
+  }
+
+  goToSuccess(PageController controller) {
+    controller.animateToPage(
+      2,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.elasticIn,
     );
   }
 
@@ -40,7 +52,8 @@ class BottomSliderNav extends StatelessWidget {
             physics: new NeverScrollableScrollPhysics(),
             children: <Widget>[
               selectProductWidget(bussinessId),
-              SelectDateModal(title: bussinessId)
+              SelectDateModal(title: bussinessId, controller: _controller),
+              SuccessDating(business: business)
             ],
             scrollDirection: Axis.horizontal,
           )),

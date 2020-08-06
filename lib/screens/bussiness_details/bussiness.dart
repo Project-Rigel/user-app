@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:i18n_extension/i18n_widget.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -49,172 +48,168 @@ class _BussinessScreenState extends State<BussinessScreen> {
           } else {
             Bussiness bussiness = snap.data;
             initializeDateFormatting("es_Es");
-            return I18n(
-              initialLocale: Locale("es", "ES"),
-              child: Scaffold(
-                extendBody: true,
-                floatingActionButton: GestureDetector(
-                  child: FloatingActionButton.extended(
-                    label: Text('Reservar tu cita'),
-                    icon: Icon(Icons.calendar_today),
-                    backgroundColor: Theme.of(context).primaryColorLight,
-                    foregroundColor: Colors.white,
-                    tooltip: 'Reservar',
-                    onPressed: () async {
-                      showBarModalBottomSheet(
-                        context: context,
-                        builder: (context, scrollController) =>
-                            Container(child: BottomSliderNav()),
-                      );
-                    },
-                  ),
+            return Scaffold(
+              extendBody: true,
+              floatingActionButton: GestureDetector(
+                child: FloatingActionButton.extended(
+                  label: Text('Reservar tu cita'),
+                  icon: Icon(Icons.calendar_today),
+                  backgroundColor: Theme.of(context).primaryColorLight,
+                  foregroundColor: Colors.white,
+                  tooltip: 'Reservar',
+                  onPressed: () async {
+                    showBarModalBottomSheet(
+                      context: context,
+                      builder: (context, scrollController) => Container(
+                          child: BottomSliderNav(
+                        business: bussiness,
+                      )),
+                    );
+                  },
                 ),
-                floatingActionButtonLocation:
-                    FloatingActionButtonLocation.centerFloat,
-                backgroundColor: Colors.white,
-                body: SafeArea(
-                  top: false,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      TopContainer(
-                        height: MediaQuery.of(context).size.height / 4,
-                        width: width,
-                        padding: EdgeInsets.only(top: 30.00),
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Hero(
-                                    tag: 'backButton',
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Icon(
-                                          Icons.arrow_back_ios,
-                                          size: 25,
-                                          color: LightColors.kDarkBlue,
-                                        ),
+              ),
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.centerFloat,
+              backgroundColor: Colors.white,
+              body: SafeArea(
+                top: false,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    TopContainer(
+                      height: MediaQuery.of(context).size.height / 4,
+                      width: width,
+                      padding: EdgeInsets.only(top: 30.00),
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Hero(
+                                  tag: 'backButton',
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Icon(
+                                        Icons.arrow_back_ios,
+                                        size: 25,
+                                        color: LightColors.kDarkBlue,
                                       ),
                                     ),
-                                  )
-                                ],
-                              )
-                            ]),
-                      ),
-                      Expanded(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                color: Colors.transparent,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 20.0, vertical: 10.0),
-                                child: Column(
-                                  children: <Widget>[
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        subheading(bussiness.name),
-                                      ],
-                                    ),
-                                    SizedBox(height: 15.0),
-                                    CategoryList(
-                                        categories: bussiness.categories),
-                                    SizedBox(height: 10.0),
-                                    Center(
-                                      child: Text(bussiness.description),
-                                    ),
-                                    SizedBox(height: 10.0),
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: <Widget>[
-                                        Expanded(
-                                          child: FlatButton.icon(
-                                            padding: EdgeInsets.all(10),
-                                            shape: new RoundedRectangleBorder(
-                                                side: BorderSide(
-                                                    color: Theme.of(context)
-                                                        .primaryColor),
-                                                borderRadius:
-                                                    new BorderRadius.circular(
-                                                        10.0)),
-                                            icon: Icon(FontAwesomeIcons.phone,
-                                                color: Theme.of(context)
-                                                    .primaryColor),
-                                            color: Colors.white,
-                                            onPressed: () async {
-                                              String _phone = bussiness.phone;
-                                              _makePhoneCall('tel:$_phone');
-                                            },
-                                            label: Expanded(
-                                              child: Text(bussiness.phone,
-                                                  textAlign: TextAlign.center),
-                                            ),
+                                  ),
+                                )
+                              ],
+                            )
+                          ]),
+                    ),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              color: Colors.transparent,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 20.0, vertical: 10.0),
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      subheading(bussiness.name),
+                                    ],
+                                  ),
+                                  SizedBox(height: 15.0),
+                                  CategoryList(
+                                      categories: bussiness.categories),
+                                  SizedBox(height: 10.0),
+                                  Center(
+                                    child: Text(bussiness.description),
+                                  ),
+                                  SizedBox(height: 10.0),
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: <Widget>[
+                                      Expanded(
+                                        child: FlatButton.icon(
+                                          padding: EdgeInsets.all(10),
+                                          shape: new RoundedRectangleBorder(
+                                              side: BorderSide(
+                                                  color: Theme.of(context)
+                                                      .primaryColor),
+                                              borderRadius:
+                                                  new BorderRadius.circular(
+                                                      10.0)),
+                                          icon: Icon(FontAwesomeIcons.phone,
+                                              color: Theme.of(context)
+                                                  .primaryColor),
+                                          color: Colors.white,
+                                          onPressed: () async {
+                                            String _phone = bussiness.phone;
+                                            _makePhoneCall('tel:$_phone');
+                                          },
+                                          label: Expanded(
+                                            child: Text(bussiness.phone,
+                                                textAlign: TextAlign.center),
                                           ),
                                         ),
-                                        SizedBox(width: 5.0),
-                                        Expanded(
-                                          child: FlatButton.icon(
-                                            padding: EdgeInsets.all(10),
-                                            shape: new RoundedRectangleBorder(
-                                                side: BorderSide(
-                                                    color: Theme.of(context)
-                                                        .primaryColor),
-                                                borderRadius:
-                                                    new BorderRadius.circular(
-                                                        10.0)),
-                                            icon: Icon(
-                                                FontAwesomeIcons.mailBulk,
-                                                color: Theme.of(context)
-                                                    .primaryColor),
-                                            color: Colors.white,
-                                            onPressed: () async {
-                                              final Uri _emailLaunchUri = Uri(
-                                                  scheme: 'mailto',
-                                                  path: bussiness.mail,
-                                                  queryParameters: {
-                                                    'subject':
-                                                        'Green&In: Consulta'
-                                                  });
+                                      ),
+                                      SizedBox(width: 5.0),
+                                      Expanded(
+                                        child: FlatButton.icon(
+                                          padding: EdgeInsets.all(10),
+                                          shape: new RoundedRectangleBorder(
+                                              side: BorderSide(
+                                                  color: Theme.of(context)
+                                                      .primaryColor),
+                                              borderRadius:
+                                                  new BorderRadius.circular(
+                                                      10.0)),
+                                          icon: Icon(FontAwesomeIcons.mailBulk,
+                                              color: Theme.of(context)
+                                                  .primaryColor),
+                                          color: Colors.white,
+                                          onPressed: () async {
+                                            final Uri _emailLaunchUri = Uri(
+                                                scheme: 'mailto',
+                                                path: bussiness.mail,
+                                                queryParameters: {
+                                                  'subject':
+                                                      'Green&In: Consulta'
+                                                });
 
-                                              launch(
-                                                  _emailLaunchUri.toString());
-                                            },
-                                            label: Expanded(
-                                              child: Text(bussiness.mail,
-                                                  textAlign: TextAlign.center),
-                                            ),
+                                            launch(_emailLaunchUri.toString());
+                                          },
+                                          label: Expanded(
+                                            child: Text(bussiness.mail,
+                                                textAlign: TextAlign.center),
                                           ),
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ],
                               ),
-                              Container(
-                                color: Colors.transparent,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 20.0, vertical: 10.0),
-                              ),
-                            ],
-                          ),
+                            ),
+                            Container(
+                              color: Colors.transparent,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 20.0, vertical: 10.0),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             );

@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:rigel/screens/bussiness_details/bottomSliderNav.dart';
 import 'package:rigel/screens/theme/light_colors.dart';
 import 'package:rigel/shared/loader.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 
@@ -14,9 +16,10 @@ final Map<DateTime, List> _holidays = {
 };
 
 class SelectDateModal extends StatefulWidget {
-  SelectDateModal({Key key, this.title}) : super(key: key);
+  SelectDateModal({Key key, this.title, this.controller}) : super(key: key);
 
   final String title;
+  final PageController controller;
 
   @override
   _SelectDateModalState createState() => _SelectDateModalState();
@@ -104,10 +107,14 @@ class _SelectDateModalState extends State<SelectDateModal>
       ],
       _selectedDay.subtract(Duration(days: 2)): ['Event A6', 'Event B6'],
       _selectedDay.add(Duration(days: 1)): [
-        'Event A8',
-        'Event B8',
-        'Event C8',
-        'Event D8'
+        "09:00",
+        "14:00",
+        "15:00",
+        "16:00",
+        "17:00",
+        "18:30",
+        "19:00",
+        "20:00"
       ],
       _selectedDay.add(Duration(days: 3)):
           Set.from(['Event A9', 'Event A9', 'Event B9']).toList(),
@@ -158,7 +165,7 @@ class _SelectDateModalState extends State<SelectDateModal>
 
   void _onVisibleDaysChanged(
       DateTime first, DateTime last, CalendarFormat format) {
-    print('CALLBACK: _onVisibleDaysChanged');
+    print('CALLBACK: _onVisibleDaysChanged & $format');
   }
 
   void _onCalendarCreated(
@@ -375,23 +382,30 @@ class _SelectDateModalState extends State<SelectDateModal>
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
         crossAxisCount: 2,
-        children: _selectedEvents
-            .map((event) => FlatButton(
-                  padding: EdgeInsets.all(10),
-                  shape: new RoundedRectangleBorder(
-                      side: BorderSide(color: Theme.of(context).primaryColor),
-                      borderRadius: new BorderRadius.circular(10.0)),
-                  color: Colors.white,
-                  onPressed: () => print('$event tapped!'),
-                  child: Expanded(
-                    child: Text('$event', textAlign: TextAlign.center),
-                  ),
-                ))
-            .toList(),
+        children: _selectedEvents.map((event) {
+          return FlatButton(
+            padding: EdgeInsets.all(10),
+            shape: new RoundedRectangleBorder(
+                side: BorderSide(color: Theme.of(context).primaryColor),
+                borderRadius: new BorderRadius.circular(10.0)),
+            color: Colors.white,
+            onPressed: () async {
+              print('$event tapped!');
+              String date = _calendarController.selectedDay.toIso8601String() +
+                  "a las $event";
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.setString('dateSelected', date);
+              BottomSliderNav().goToSuccess(widget.controller);
+            },
+            child: Expanded(
+              child: Text('$event', textAlign: TextAlign.center),
+            ),
+          );
+        }).toList(),
       );
     } else {
       return Text(
-        "No hay nada disponible este día",
+        "Lo sentimos, ese día no tiene disponibilidad",
         style: TextStyle(fontWeight: FontWeight.w500),
       );
     }

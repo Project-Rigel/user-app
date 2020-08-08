@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rigel/screens/bussiness_details/bottomSliderNav.dart';
 import 'package:rigel/screens/theme/light_colors.dart';
 import 'package:rigel/shared/loader.dart';
@@ -27,6 +29,7 @@ class SelectDateModal extends StatefulWidget {
 
 class _SelectDateModalState extends State<SelectDateModal>
     with TickerProviderStateMixin {
+  FirebaseUser user;
   Map<DateTime, List> _events;
   List _selectedEvents;
   List<String> openDays;
@@ -41,6 +44,11 @@ class _SelectDateModalState extends State<SelectDateModal>
       CloudFunctions(app: FirebaseApp.instance, region: "europe-west1")
           .getHttpsCallable(
     functionName: 'getAvaliableTimeIntervals',
+  );
+  final HttpsCallable callableBook =
+      CloudFunctions(app: FirebaseApp.instance, region: "europe-west1")
+          .getHttpsCallable(
+    functionName: 'bookAppointment',
   );
 
   testDaysMethod() async {
@@ -59,6 +67,21 @@ class _SelectDateModalState extends State<SelectDateModal>
   testTimesMethod(DateTime day) async {
     var response = await callableTimes.call(<String, dynamic>{
       'timestamp': day.toIso8601String(),
+      'agendaId': 'AZNVcZzTz5F9yLkxx96h',
+      'businessId': 'gpVwyDZEsgmVWyaBuwKx',
+      'productId': '5C3ymeILXBSH7ncaryTU'
+    });
+    if (response != null) {
+      print(response.data);
+      return response.data;
+    }
+    return null;
+  }
+
+  testAppointmentMethod(DateTime day) async {
+    var response = await callableBook.call(<String, dynamic>{
+      'uid': "r4VNj2nR9gckExM1siUbM1bw6qV2",
+      'timestamp': day.toUtc().toString(),
       'agendaId': 'AZNVcZzTz5F9yLkxx96h',
       'businessId': 'gpVwyDZEsgmVWyaBuwKx',
       'productId': '5C3ymeILXBSH7ncaryTU'
@@ -175,6 +198,8 @@ class _SelectDateModalState extends State<SelectDateModal>
 
   @override
   Widget build(BuildContext context) {
+    //user = Provider.of<FirebaseUser>(context);
+
     return Scaffold(
       body: FutureBuilder(
         future: testDaysMethod(),
@@ -375,39 +400,61 @@ class _SelectDateModalState extends State<SelectDateModal>
   }
 
   Widget _buildEventList() {
-    if (_selectedEvents.isNotEmpty) {
-      return GridView.count(
-        primary: false,
-        childAspectRatio: 3.0,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        crossAxisCount: 2,
-        children: _selectedEvents.map((event) {
-          return FlatButton(
-            padding: EdgeInsets.all(10),
-            shape: new RoundedRectangleBorder(
-                side: BorderSide(color: Theme.of(context).primaryColor),
-                borderRadius: new BorderRadius.circular(10.0)),
-            color: Colors.white,
-            onPressed: () async {
-              print('$event tapped!');
-              String date = _calendarController.selectedDay.toIso8601String() +
-                  "a las $event";
-              SharedPreferences prefs = await SharedPreferences.getInstance();
-              prefs.setString('dateSelected', date);
-              BottomSliderNav().goToSuccess(widget.controller);
-            },
-            child: Expanded(
-              child: Text('$event', textAlign: TextAlign.center),
-            ),
-          );
-        }).toList(),
-      );
-    } else {
+    //if (_selectedEvents.isNotEmpty) {
+    return FutureBuilder(
+        future: testTimesMethod(_calendarController.selectedDay),
+        builder: (context, snapshot) {
+          List<dynamic> times;
+          if (snapshot.data != null) {
+            times = snapshot.data["intervals"];
+            if (times.length >= 1) {
+              //print(times);
+              return GridView.count(
+                primary: false,
+                childAspectRatio: 3.0,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                crossAxisCount: 2,
+                children: times.map((event) {
+                  //_selectedEvents.map((event) {
+                  return FlatButton(
+                    padding: EdgeInsets.all(10),
+                    shape: new RoundedRectangleBorder(
+                        side: BorderSide(color: Theme.of(context).primaryColor),
+                        borderRadius: new BorderRadius.circular(10.0)),
+                    color: Colors.white,
+                    onPressed: () async {
+                      print('$event tapped!');
+                      String date =
+                          _calendarController.selectedDay.toIso8601String() +
+                              " a las $event";
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      await prefs.setString('dateSelected', date);
+                      testAppointmentMethod(_calendarController.selectedDay);
+                      BottomSliderNav().goToSuccess(widget.controller);
+                    },
+                    child: Expanded(
+                      child: Text('$event', textAlign: TextAlign.center),
+                    ),
+                  );
+                }).toList(),
+              );
+            } else {
+              return Text(
+                "Lo sentimos, ese día no tiene disponibilidad",
+                style: TextStyle(fontWeight: FontWeight.w500),
+              );
+            }
+          } else {
+            return LoadingScreen();
+          }
+        });
+    /*} else {
       return Text(
         "Lo sentimos, ese día no tiene disponibilidad",
         style: TextStyle(fontWeight: FontWeight.w500),
       );
-    }
+    }*/
   }
 }

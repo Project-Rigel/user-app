@@ -2,20 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:rigel/screens/bussiness_details/bussiness.dart';
+import 'package:rigel/screens/home.dart';
 import 'package:rigel/screens/screens.dart';
 
 import '../main.dart';
 
 class AppBottomNav extends StatefulWidget {
   @override
-  _AppBottomNavState createState() =>
-      _AppBottomNavState();
+  _AppBottomNavState createState() => _AppBottomNavState();
 }
 
-class _AppBottomNavState
-    extends State<AppBottomNav> {
+class _AppBottomNavState extends State<AppBottomNav> {
   var currentTab = [
-    BussinessScreen(),
+    HomePage(),
     ProfileScreen(),
     AboutScreen(),
   ];
@@ -48,4 +47,3 @@ class _AppBottomNavState
     );
   }
 }
-

@@ -20,7 +20,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print(new DateFormat.yMMMd("es").format(new DateTime(2019, 12, 06)));
-    print("HOOLA");
     return MultiProvider(
       providers: [
         StreamProvider<Report>.value(value: Global.reportRef.documentStream),
@@ -38,7 +37,7 @@ class MyApp extends StatelessWidget {
 
         // Named Routes
         routes: {
-          '/': (context) => LoginScreen(),
+          '/': (context) => AppBottomNav(),
           '/verification': (context) => PhoneInputScreen(),
           '/home': (context) => AppBottomNav(),
           '/topics': (context) => BussinessScreen(),

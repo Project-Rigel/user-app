@@ -17,8 +17,8 @@ class Global {
   };
 
   // Firestore References for Writes
-  static final Collection<Bussiness> bussinessRef =
-      Collection<Bussiness>(path: 'bussiness');
+  static final Collection<Bussiness> businessRef =
+      Collection<Bussiness>(path: 'business');
   static final UserData<Report> reportRef =
       UserData<Report>(collection: 'customers');
 }

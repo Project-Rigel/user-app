@@ -50,7 +50,7 @@ class BottomSliderNav extends StatelessWidget {
   Widget selectProductWidget(String bussinessId) {
     return FutureBuilder(
       future: Firestore.instance
-          .collection('bussiness/gpVwyDZEsgmVWyaBuwKx/productos')
+          .collection('business/gpVwyDZEsgmVWyaBuwKx/productos')
           .getDocuments(),
       builder: (BuildContext context, AsyncSnapshot snap) {
         if (snap.hasData) {

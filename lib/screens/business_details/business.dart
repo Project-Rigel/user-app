@@ -1,14 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:i18n_extension/i18n_widget.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:rigel/screens/bussiness_details/select_date.dart';
 import 'package:rigel/screens/theme/light_colors.dart';
 import 'package:rigel/services/services.dart';
 import 'package:rigel/shared/category_list.dart';
 import 'package:rigel/shared/loader.dart';
-import 'package:rigel/shared/top_container.dart';
+import 'package:rigel/screens/business_details/top_container.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -42,7 +40,7 @@ class _BussinessScreenState extends State<BussinessScreen> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return FutureBuilder(
-        future: Document<Bussiness>(path: 'bussiness/$bussinessId').getData(),
+        future: Document<Bussiness>(path: 'business/$bussinessId').getData(),
         builder: (BuildContext context, AsyncSnapshot snap) {
           if (!snap.hasData || snap.hasError) {
             return LoadingScreen();

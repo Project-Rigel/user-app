@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rigel/screens/bussiness_details/select_date.service.dart';
+import 'package:rigel/screens/business_details/select_date.service.dart';
 import 'package:rigel/shared/loader.dart';
 import 'package:table_calendar/table_calendar.dart';
 

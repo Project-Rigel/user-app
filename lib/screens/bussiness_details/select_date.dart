@@ -1,10 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:rigel/screens/theme/light_colors.dart';
+import 'package:rigel/screens/bussiness_details/select_date.service.dart';
 import 'package:rigel/shared/loader.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:cloud_functions/cloud_functions.dart';
 
 final Map<DateTime, List> _holidays = {
   DateTime(2020, 8, 26): ['Cerrado'],
@@ -29,43 +26,6 @@ class _SelectDateModalState extends State<SelectDateModal>
   List<String> openDays;
   AnimationController _animationController;
   CalendarController _calendarController;
-  final HttpsCallable callableDays =
-      CloudFunctions(app: FirebaseApp.instance, region: "europe-west1")
-          .getHttpsCallable(
-    functionName: 'getAvaliableDaysInMonth',
-  );
-  final HttpsCallable callableTimes =
-      CloudFunctions(app: FirebaseApp.instance, region: "europe-west1")
-          .getHttpsCallable(
-    functionName: 'getAvaliableTimeIntervals',
-  );
-
-  testDaysMethod() async {
-    var response = await callableDays.call(<String, dynamic>{
-      'month': DateTime.now().month,
-      'agendaId': 'AZNVcZzTz5F9yLkxx96h',
-      'businessId': 'gpVwyDZEsgmVWyaBuwKx',
-      'productId': '5C3ymeILXBSH7ncaryTU'
-    });
-    if (response != null) {
-      return response.data;
-    }
-    return null;
-  }
-
-  testTimesMethod(DateTime day) async {
-    var response = await callableTimes.call(<String, dynamic>{
-      'timestamp': day.toIso8601String(),
-      'agendaId': 'AZNVcZzTz5F9yLkxx96h',
-      'businessId': 'gpVwyDZEsgmVWyaBuwKx',
-      'productId': '5C3ymeILXBSH7ncaryTU'
-    });
-    if (response != null) {
-      print(response.data);
-      return response.data;
-    }
-    return null;
-  }
 
   @override
   initState() {
@@ -229,106 +189,6 @@ class _SelectDateModalState extends State<SelectDateModal>
         ),
       ),
       onDaySelected: _onDaySelected,
-      onVisibleDaysChanged: _onVisibleDaysChanged,
-      onCalendarCreated: _onCalendarCreated,
-    );
-  }
-
-  // More advanced TableCalendar configuration (using Builders & Styles)
-  Widget _buildTableCalendarWithBuilders() {
-    return TableCalendar(
-      locale: 'es_Es',
-      calendarController: _calendarController,
-      events: _events,
-      holidays: _holidays,
-      initialCalendarFormat: CalendarFormat.month,
-      formatAnimation: FormatAnimation.slide,
-      startingDayOfWeek: StartingDayOfWeek.sunday,
-      availableGestures: AvailableGestures.all,
-      availableCalendarFormats: const {
-        CalendarFormat.month: '',
-        CalendarFormat.week: '',
-      },
-      calendarStyle: CalendarStyle(
-        outsideDaysVisible: false,
-        weekendStyle: TextStyle().copyWith(color: Colors.blue[800]),
-        holidayStyle: TextStyle().copyWith(color: Colors.blue[800]),
-      ),
-      daysOfWeekStyle: DaysOfWeekStyle(
-        weekendStyle: TextStyle().copyWith(color: Colors.blue[600]),
-      ),
-      headerStyle: HeaderStyle(
-        centerHeaderTitle: true,
-        formatButtonVisible: true,
-      ),
-      builders: CalendarBuilders(
-        selectedDayBuilder: (context, date, _) {
-          return FadeTransition(
-            opacity: Tween(begin: 0.0, end: 1.0).animate(_animationController),
-            child: Container(
-              margin: const EdgeInsets.all(4.0),
-              padding: const EdgeInsets.only(top: 5.0, left: 6.0),
-              color: Colors.deepOrange[300],
-              width: 100,
-              height: 100,
-              child: Text(
-                '${date.day}',
-                style: TextStyle().copyWith(fontSize: 16.0),
-              ),
-            ),
-          );
-        },
-        todayDayBuilder: (context, date, _) {
-          return Container(
-            margin: const EdgeInsets.all(4.0),
-            padding: const EdgeInsets.only(top: 5.0, left: 6.0),
-            color: Colors.amber[400],
-            width: 100,
-            height: 100,
-            child: Text(
-              '${date.day}',
-              style: TextStyle().copyWith(fontSize: 16.0),
-            ),
-          );
-        },
-        markersBuilder: (context, date, events, holidays) {
-          final children = <Widget>[];
-
-          if (events.isNotEmpty) {
-            children.add(
-              Positioned(
-                right: 1,
-                bottom: 1,
-                child: _buildEventsMarker(date, events),
-              ),
-            );
-          } else {
-            print("AQUIIUIUUIUI");
-            children.add(
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Text("No hay nada disponible este día"),
-              ),
-            );
-          }
-
-          if (holidays.isNotEmpty) {
-            children.add(
-              Positioned(
-                right: -2,
-                top: -2,
-                child: _buildHolidaysMarker(),
-              ),
-            );
-          }
-
-          return children;
-        },
-      ),
-      onDaySelected: (date, events) {
-        _onDaySelected(date, events);
-        _animationController.forward(from: 0.0);
-      },
       onVisibleDaysChanged: _onVisibleDaysChanged,
       onCalendarCreated: _onCalendarCreated,
     );

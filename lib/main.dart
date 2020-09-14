@@ -3,7 +3,7 @@ import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rigel/screens/bussiness_details/bussiness.dart';
-import 'package:rigel/screens/login/phoneInput.dart';
+import 'package:rigel/screens/login/phone_input.dart';
 import 'package:rigel/shared/bottom_nav.dart';
 import 'services/services.dart';
 import 'screens/screens.dart';

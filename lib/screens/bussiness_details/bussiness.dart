@@ -12,7 +12,7 @@ import 'package:rigel/shared/top_container.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
-import 'bottomSliderNav.dart';
+import 'bottom_slider_nav.dart';
 
 class BussinessScreen extends StatefulWidget {
   @override

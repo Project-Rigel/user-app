@@ -14,7 +14,7 @@ class AppBottomNav extends StatefulWidget {
 
 class _AppBottomNavState extends State<AppBottomNav> {
   var currentTab = [
-    HomePage(),
+    BussinessScreen(),
     ProfileScreen(),
     AboutScreen(),
   ];

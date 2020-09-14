@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:rigel/screens/login/phoneVerification.dart';
+import 'package:rigel/screens/login/phone_verification.dart';
 import 'package:rigel/services/auth.dart';
 import 'package:rigel/shared/animations/fade_animation.dart';
 import 'package:rxdart/rxdart.dart';
@@ -200,7 +200,6 @@ class _PhoneInputScreenState extends State<PhoneInputScreen>
                             hasError = true;
                           });
                         } else {
-
                           await auth.phoneVerification(currentText);
                           setState(() {
                             hasError = false;

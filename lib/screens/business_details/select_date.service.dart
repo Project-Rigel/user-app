@@ -1,6 +1,5 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
 
 final HttpsCallable callableDays =
     CloudFunctions(app: FirebaseApp.instance, region: "europe-west1")
@@ -11,6 +10,11 @@ final HttpsCallable callableTimes =
     CloudFunctions(app: FirebaseApp.instance, region: "europe-west1")
         .getHttpsCallable(
   functionName: 'getAvaliableTimeIntervals',
+);
+final HttpsCallable callableBook =
+    CloudFunctions(app: FirebaseApp.instance, region: "europe-west1")
+        .getHttpsCallable(
+  functionName: 'bookAppointment',
 );
 
 testDaysMethod() async {
@@ -29,6 +33,21 @@ testDaysMethod() async {
 testTimesMethod(DateTime day) async {
   var response = await callableTimes.call(<String, dynamic>{
     'timestamp': day.toIso8601String(),
+    'agendaId': 'AZNVcZzTz5F9yLkxx96h',
+    'businessId': 'gpVwyDZEsgmVWyaBuwKx',
+    'productId': '5C3ymeILXBSH7ncaryTU'
+  });
+  if (response != null) {
+    print(response.data);
+    return response.data;
+  }
+  return null;
+}
+
+testAppointmentMethod(DateTime day) async {
+  var response = await callableBook.call(<String, dynamic>{
+    'uid': "r4VNj2nR9gckExM1siUbM1bw6qV2",
+    'timestamp': day.toUtc().toString(),
     'agendaId': 'AZNVcZzTz5F9yLkxx96h',
     'businessId': 'gpVwyDZEsgmVWyaBuwKx',
     'productId': '5C3ymeILXBSH7ncaryTU'

@@ -18,7 +18,7 @@ class BussinessScreen extends StatefulWidget {
 }
 
 class _BussinessScreenState extends State<BussinessScreen> {
-  final String bussinessId = "gpVwyDZEsgmVWyaBuwKx";
+  final String bussinessId = "gQc7A7w1GIATEz4vo65T";
 
   @override
   void initState() {

@@ -43,6 +43,7 @@ class _BussinessScreenState extends State<BussinessScreen> {
         future: Document<Bussiness>(path: 'business/$bussinessId').getData(),
         builder: (BuildContext context, AsyncSnapshot snap) {
           if (!snap.hasData || snap.hasError) {
+            print(snap.error);
             return LoadingScreen();
           } else {
             Bussiness bussiness = snap.data;
@@ -125,9 +126,9 @@ class _BussinessScreenState extends State<BussinessScreen> {
                                         subheading(bussiness.name),
                                       ],
                                     ),
-                                    SizedBox(height: 15.0),
+                                    /* SizedBox(height: 15.0),
                                     CategoryList(
-                                        categories: bussiness.categories),
+                                        categories: bussiness.categories),*/
                                     SizedBox(height: 10.0),
                                     Center(
                                       child: Text(bussiness.description),

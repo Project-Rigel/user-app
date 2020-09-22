@@ -25,17 +25,8 @@ class LoginScreenState extends State<LoginScreen> {
     super.initState();
     auth.getUser.then((user) {
       if (user != null) {
-        isUserVerified(user).then((val) {
-          if (val == true) {
-            Navigator.pushReplacementNamed(context, '/home');
-          } else {
-            Navigator.pushReplacementNamed(context, "/verification");
-          }
-          print("success");
-        }).catchError((error, stackTrace) {
-          print("outer: $error");
-        });
-      } //TODO modal saying service not available
+        isUserVerified(user).catchError(showAlertDialog(context));
+      }
     });
   }
 
@@ -43,6 +34,12 @@ class LoginScreenState extends State<LoginScreen> {
     DocumentSnapshot snapshot =
         await _db.collection('customers').document(user.uid).get();
     bool verified = await snapshot['verified'];
+
+    if (verified == true) {
+      Navigator.pushReplacementNamed(context, '/home');
+    } else {
+      Navigator.pushReplacementNamed(context, "/verification");
+    }
 
     log(verified.runtimeType.toString());
     return verified;
@@ -262,8 +259,7 @@ class LoginScreenState extends State<LoginScreen> {
                                   email: emailController.text,
                                   password: passController.text);
                               if (user != null) {
-                                Navigator.pushReplacementNamed(
-                                    context, '/home');
+                                isUserVerified(user);
                               } else {
                                 showAlertDialog(context);
                               }
@@ -337,8 +333,7 @@ class LoginScreenState extends State<LoginScreen> {
                                     FirebaseUser user =
                                         await auth.appleSignIn();
                                     if (user != null) {
-                                      Navigator.pushReplacementNamed(
-                                          context, '/topics');
+                                      isUserVerified(user);
                                     } else {
                                       showAlertDialog(context);
                                     }

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginButton extends StatelessWidget {
@@ -12,6 +14,21 @@ class LoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Firestore _db = Firestore.instance;
+
+    Future<bool> isUserVerified(FirebaseUser user) async {
+      DocumentSnapshot snapshot =
+          await _db.collection('customers').document(user.uid).get();
+      bool verified = await snapshot['verified'];
+
+      if (verified == true) {
+        Navigator.pushReplacementNamed(context, '/home');
+      } else {
+        Navigator.pushReplacementNamed(context, "/verification");
+      }
+      return verified;
+    }
+
     return Container(
       height: 50,
       margin: EdgeInsets.only(bottom: 10),
@@ -25,7 +42,7 @@ class LoginButton extends StatelessWidget {
         onPressed: () async {
           var user = await loginMethod();
           if (user != null) {
-            Navigator.pushReplacementNamed(context, '/home');
+            isUserVerified(user);
           } else {
             showAlertDialog(context);
           }

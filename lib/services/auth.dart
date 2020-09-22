@@ -1,11 +1,13 @@
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:async';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
@@ -94,7 +96,7 @@ class AuthService {
       log('data: $phoneNum');
       await _auth.verifyPhoneNumber(
           phoneNumber: phoneNum,
-          timeout: Duration(seconds: 10),
+          timeout: Duration(seconds: 0),
           verificationCompleted: (authCredential) =>
               _verificationComplete(authCredential),
           verificationFailed: (authException) => log(authException.message),
@@ -191,17 +193,30 @@ class AuthService {
     FirebaseAuth.instance.signInWithCredential(authCredential);
   }
 
-  _codeSent(String verificationId, [int forceResendingToken]) {
+  _codeSent(String verificationId, [int forceResendingToken]) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString("smsVerificationId", verificationId);
     mVerificationId = verificationId;
   }
 
   phoneVerification(String smsCode) async {
     print(mVerificationId);
-    final AuthCredential credential = PhoneAuthProvider.getCredential(
-      verificationId: mVerificationId,
-      smsCode: smsCode,
-    );
-    FirebaseUser actualUser = await _auth.currentUser();
-    actualUser.linkWithCredential(credential);
+    Future<bool> phoneVerification(String smsCode, BuildContext context) async {
+      final prefs = await SharedPreferences.getInstance();
+      mVerificationId = prefs.getString('smsVerificationId') ?? '';
+      bool success;
+      final AuthCredential credential = PhoneAuthProvider.getCredential(
+        verificationId: mVerificationId,
+        smsCode: smsCode,
+      );
+      print(credential);
+
+      FirebaseUser actualUser = await _auth.currentUser();
+      await actualUser.linkWithCredential(credential).then((value) {
+        success = true;
+        Navigator.pushReplacementNamed(context, '/home');
+      }).catchError((error) => success = false);
+      return success;
+    }
   }
 }

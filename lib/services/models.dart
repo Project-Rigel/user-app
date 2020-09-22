@@ -56,6 +56,21 @@ class Quiz {
   }
 }
 
+class Address {
+  String address;
+  String ca;
+  String postalCode;
+  String province;
+
+  Address({this.address, this.ca, this.postalCode, this.province});
+  Address.fromMap(Map data) {
+    address = data['address'];
+    ca = data['ca'] ?? '';
+    province = data['province'];
+    postalCode = data['postalCode'];
+  }
+}
+
 class Bussiness {
   final String id;
   final String name;
@@ -63,7 +78,7 @@ class Bussiness {
   final String mail;
   final String phone;
   final String img;
-  final List<String> categories;
+  final Address address;
 
   Bussiness(
       {this.id,
@@ -72,7 +87,7 @@ class Bussiness {
       this.mail,
       this.phone,
       this.img,
-      this.categories});
+      this.address});
 
   factory Bussiness.fromMap(Map data) {
     return Bussiness(
@@ -81,8 +96,31 @@ class Bussiness {
       description: data['description'] ?? '',
       mail: data['mail'] ?? '',
       phone: data['phone'] ?? '',
-      img: data['img'] ?? 'default.png',
-      categories: List.from(data['categories']),
+      img: data['img'] ?? 'clock.png',
+      address: Address.fromMap(data['address']),
+    );
+  }
+}
+
+enum Gender { male, female, undefined }
+
+class Product {
+  String description;
+  int price;
+  String name;
+  String img;
+  Gender gender;
+
+  Product({this.description, this.price, this.name, this.img, this.gender});
+
+  factory Product.fromMap(Map data) {
+    return Product(
+      description: data['description'] ?? "No description set",
+      price: data['price'] ?? null,
+      name: data['name'] ?? "No name set",
+      img: data['img'] ??
+          "https://firebasestorage.googleapis.com/v0/b/rigel-admin.appspot.com/o/userapp%2Funknown_profile.png?alt=media&token=0dfd930d-60c9-4a8c-be1b-8802f6d9685d",
+      gender: data['gender'] ?? Gender.undefined,
     );
   }
 }

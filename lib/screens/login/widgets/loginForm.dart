@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:rigel/screens/login/login.dart';
 import 'package:rigel/services/auth.dart';
 import 'package:rigel/shared/animations/fade_animation.dart';
 
@@ -145,7 +147,12 @@ class _LoginFormState extends State<LoginForm> {
         FadeAnimation(
             2,
             InkWell(
-              onTap: _sendToServer,
+              onTap: () async {
+                var user = await _sendToServer();
+                if (user != null) {
+                  showAlertDialog(context);
+                }
+              },
               child: Container(
                 height: 50,
                 decoration: BoxDecoration(
@@ -156,7 +163,7 @@ class _LoginFormState extends State<LoginForm> {
                     ])),
                 child: Center(
                   child: Text(
-                    "Registrase",
+                    "Registrarse",
                     style: TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
@@ -201,19 +208,48 @@ class _LoginFormState extends State<LoginForm> {
     }
   }
 
-  _sendToServer() {
+  Future<FirebaseUser> _sendToServer() async {
     if (_formKey.currentState.validate()) {
       // No any error in validation
       _formKey.currentState.save();
       print("Email $_email");
       String displayName = _name + " " + _surname;
-      auth.signUpWithEmail(
+      FirebaseUser user = await auth.signUpWithEmail(
           email: _email, password: _password, name: displayName);
+      return user;
     } else {
       // validation error
       setState(() {
         _autoValidate = true;
       });
+      return null;
     }
+  }
+
+  showAlertDialog(BuildContext context) {
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Registro finalizado"),
+      content: Text("Tus datos se han registrado correctamente."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }

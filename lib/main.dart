@@ -2,18 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:rigel/screens/bussiness_details/bussiness.dart';
-import 'package:rigel/screens/login/phoneInput.dart';
+import 'package:rigel/screens/business_details/business.dart';
+import 'package:rigel/screens/login/phone_input.dart';
 import 'package:rigel/shared/bottom_nav.dart';
 import 'services/services.dart';
 import 'screens/screens.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 
-void main() => runApp(MyApp());
+//void main() => runApp(MyApp());
+void main() {
+  initializeDateFormatting("es").then((_) => runApp(MyApp()));
+}
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    print(new DateFormat.yMMMd("es").format(new DateTime(2019, 12, 06)));
     return MultiProvider(
       providers: [
         StreamProvider<Report>.value(value: Global.reportRef.documentStream),

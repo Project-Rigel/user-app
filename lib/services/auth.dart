@@ -119,11 +119,11 @@ class AuthService {
       FirebaseUser user = result.user;
       return user;
     } catch (e) {
-      return e.message;
+      return null;
     }
   }
 
-  Future signUpWithEmail({
+  Future<FirebaseUser> signUpWithEmail({
     @required String email,
     @required String password,
     @required String name,
@@ -199,30 +199,24 @@ class AuthService {
     mVerificationId = verificationId;
   }
 
-  Future<bool> isUserVerified(FirebaseUser user) async {
-    DocumentSnapshot snapshot =
-        await _db.collection('customers').document(user.uid).get();
-    bool verified = await snapshot['verified'];
+  phoneVerification(String smsCode) async {
+    print(mVerificationId);
+    Future<bool> phoneVerification(String smsCode, BuildContext context) async {
+      final prefs = await SharedPreferences.getInstance();
+      mVerificationId = prefs.getString('smsVerificationId') ?? '';
+      bool success;
+      final AuthCredential credential = PhoneAuthProvider.getCredential(
+        verificationId: mVerificationId,
+        smsCode: smsCode,
+      );
+      print(credential);
 
-    log(verified.runtimeType.toString());
-    return verified;
-  }
-
-  Future<bool> phoneVerification(String smsCode, BuildContext context) async {
-    final prefs = await SharedPreferences.getInstance();
-    mVerificationId = prefs.getString('smsVerificationId') ?? '';
-    bool success;
-    final AuthCredential credential = PhoneAuthProvider.getCredential(
-      verificationId: mVerificationId,
-      smsCode: smsCode,
-    );
-    print(credential);
-
-    FirebaseUser actualUser = await _auth.currentUser();
-    await actualUser.linkWithCredential(credential).then((value) {
-      success = true;
-      Navigator.pushReplacementNamed(context, '/home');
-    }).catchError((error) => success = false);
-    return success;
+      FirebaseUser actualUser = await _auth.currentUser();
+      await actualUser.linkWithCredential(credential).then((value) {
+        success = true;
+        Navigator.pushReplacementNamed(context, '/home');
+      }).catchError((error) => success = false);
+      return success;
+    }
   }
 }

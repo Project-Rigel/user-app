@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:rigel/screens/login/phoneVerification.dart';
+import 'package:rigel/screens/login/phone_verification.dart';
 import 'package:rigel/services/auth.dart';
 import 'package:rigel/shared/animations/fade_animation.dart';
 import 'package:rxdart/rxdart.dart';
@@ -24,6 +24,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen>
   StreamController<ErrorAnimationType> errorController;
 
   TextEditingController textEditingController = TextEditingController();
+  final myPhoneController = TextEditingController();
 
   String currentText = "";
 
@@ -45,7 +46,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen>
   gotoVerification() {
     //controller_0To1.forward(from: 0.0);
     _controller.animateToPage(
-      0,
+      1,
       duration: Duration(milliseconds: 800),
       curve: Curves.fastLinearToSlowEaseIn,
     );
@@ -185,7 +186,9 @@ class _PhoneInputScreenState extends State<PhoneInputScreen>
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Text(
-                    hasError ? "*Please fill up all the cells properly" : "",
+                    hasError
+                        ? "* Hay que rellenar las celdas correctamente"
+                        : "",
                     style: TextStyle(color: Colors.red.shade300, fontSize: 15),
                   ),
                 ),
@@ -200,10 +203,17 @@ class _PhoneInputScreenState extends State<PhoneInputScreen>
                             hasError = true;
                           });
                         } else {
-                          await auth.phoneVerification(currentText, context);
-                          setState(() {
-                            hasError = false;
-                          });
+                          try {
+                            await auth.phoneVerification(currentText);
+                            setState(() {
+                              hasError = false;
+                            });
+                          } catch (e) {
+                            errorController.add(ErrorAnimationType.shake);
+                            setState(() {
+                              hasError = true;
+                            });
+                          }
                         }
                       },
                       child: Container(
@@ -232,7 +242,6 @@ class _PhoneInputScreenState extends State<PhoneInputScreen>
   }
 
   Widget phoneInputWidget(BuildContext context) {
-    final myController = TextEditingController();
     FirebaseUser user = Provider.of<FirebaseUser>(context);
     AuthService auth = AuthService();
 
@@ -309,7 +318,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen>
                                           hintStyle: TextStyle(
                                               color: Colors.grey[400])),
                                       keyboardType: TextInputType.phone,
-                                      controller: myController,
+                                      controller: myPhoneController,
                                     ),
                                   )),
                             )),
@@ -321,10 +330,10 @@ class _PhoneInputScreenState extends State<PhoneInputScreen>
                     2,
                     InkWell(
                       onTap: () async {
-                        //if (user != null) {
-                        auth.phone2Factor(myController.text);
-                        gotoVerification();
-                        //}
+                        if (user != null) {
+                          auth.phone2Factor(myPhoneController.text);
+                          gotoVerification();
+                        }
                       },
                       child: Container(
                         height: 50,

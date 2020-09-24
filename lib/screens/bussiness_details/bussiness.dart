@@ -1,14 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:rigel/screens/bussiness_details/select_date.dart';
-import 'package:rigel/screens/screens.dart';
+import 'package:rigel/screens/business_details/select_date.dart';
+import 'package:rigel/screens/business_details/top_container.dart';
 import 'package:rigel/screens/theme/light_colors.dart';
 import 'package:rigel/services/services.dart';
-import 'package:rigel/shared/category_list.dart';
 import 'package:rigel/shared/loader.dart';
-import 'package:rigel/shared/top_container.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class BussinessScreen extends StatefulWidget {
@@ -122,9 +119,6 @@ class _BussinessScreenState extends State<BussinessScreen> {
                                       subheading(bussiness.name),
                                     ],
                                   ),
-                                  SizedBox(height: 15.0),
-                                  CategoryList(
-                                      categories: bussiness.categories),
                                   SizedBox(height: 10.0),
                                   Center(
                                     child: Text(bussiness.description),

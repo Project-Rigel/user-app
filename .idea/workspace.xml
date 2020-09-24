@@ -4,17 +4,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="30d87ca3-d7ae-4954-9c58-a0106f6c83c7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Podfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/bussiness_details/bussiness.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/bussiness_details/bussiness.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/login/login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/login/login.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/login/phone_input.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/login/phone_input.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/login/widgets/loginBtn.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/login/widgets/loginBtn.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/services/auth.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/auth.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
-    </list>
+    <list default="true" id="30d87ca3-d7ae-4954-9c58-a0106f6c83c7" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

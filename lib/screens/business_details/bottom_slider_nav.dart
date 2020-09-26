@@ -9,7 +9,7 @@ import 'select_date.dart';
 
 class BottomSliderNav extends StatelessWidget {
   BottomSliderNav({Key key, this.business}) : super(key: key);
-  final String bussinessId = "gpVwyDZEsgmVWyaBuwKx";
+  final String bussinessId = "gQc7A7w1GIATEz4vo65T";
   final Bussiness business;
   var timeSelected = "";
 
@@ -63,7 +63,8 @@ class BottomSliderNav extends StatelessWidget {
   Widget selectProductWidget(String bussinessId) {
     return FutureBuilder(
       future: Firestore.instance
-          .collection('business/gpVwyDZEsgmVWyaBuwKx/productos')
+          .collection('products')
+          .where("businessId", isEqualTo: bussinessId)
           .getDocuments(),
       builder: (BuildContext context, AsyncSnapshot snap) {
         if (snap.hasData) {

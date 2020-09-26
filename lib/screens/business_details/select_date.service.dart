@@ -21,8 +21,8 @@ testDaysMethod() async {
   var response = await callableDays.call(<String, dynamic>{
     'month': DateTime.now().month,
     'agendaId': 'AZNVcZzTz5F9yLkxx96h',
-    'businessId': 'gpVwyDZEsgmVWyaBuwKx',
-    'productId': '5C3ymeILXBSH7ncaryTU'
+    'businessId': 'gQc7A7w1GIATEz4vo65T',
+    'productId': 'QzsxOW8f0vThRPwkaNEi'
   });
   if (response != null) {
     return response.data;
@@ -34,8 +34,8 @@ testTimesMethod(DateTime day) async {
   var response = await callableTimes.call(<String, dynamic>{
     'timestamp': day.toIso8601String(),
     'agendaId': 'AZNVcZzTz5F9yLkxx96h',
-    'businessId': 'gpVwyDZEsgmVWyaBuwKx',
-    'productId': '5C3ymeILXBSH7ncaryTU'
+    'businessId': 'gQc7A7w1GIATEz4vo65T',
+    'productId': 'QzsxOW8f0vThRPwkaNEi'
   });
   if (response != null) {
     print(response.data);
@@ -49,8 +49,8 @@ testAppointmentMethod(DateTime day) async {
     'uid': "r4VNj2nR9gckExM1siUbM1bw6qV2",
     'timestamp': day.toUtc().toString(),
     'agendaId': 'AZNVcZzTz5F9yLkxx96h',
-    'businessId': 'gpVwyDZEsgmVWyaBuwKx',
-    'productId': '5C3ymeILXBSH7ncaryTU'
+    'businessId': 'gQc7A7w1GIATEz4vo65T',
+    'productId': 'QzsxOW8f0vThRPwkaNEi'
   });
   if (response != null) {
     print(response.data);

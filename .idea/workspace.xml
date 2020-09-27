@@ -6,13 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="30d87ca3-d7ae-4954-9c58-a0106f6c83c7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/login/phone_input.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/login/phone_input.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_2_API_30" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="74df399b" />
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -89,22 +90,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1600803088783" />
-    <state width="1340" height="277" key="GridCell.Tab.0.bottom" timestamp="1601028736871">
+    <state width="1340" height="279" key="GridCell.Tab.0.bottom" timestamp="1601231853726">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1340" height="277" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601028736871" />
-    <state width="1340" height="277" key="GridCell.Tab.0.center" timestamp="1601028736870">
+    <state width="1340" height="279" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601231853726" />
+    <state width="1340" height="279" key="GridCell.Tab.0.center" timestamp="1601231853726">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1340" height="277" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601028736870" />
-    <state width="1340" height="277" key="GridCell.Tab.0.left" timestamp="1601028736870">
+    <state width="1340" height="279" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601231853726" />
+    <state width="1340" height="279" key="GridCell.Tab.0.left" timestamp="1601231853726">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1340" height="277" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601028736870" />
-    <state width="1340" height="277" key="GridCell.Tab.0.right" timestamp="1601028736871">
+    <state width="1340" height="279" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601231853726" />
+    <state width="1340" height="279" key="GridCell.Tab.0.right" timestamp="1601231853726">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1340" height="277" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601028736871" />
+    <state width="1340" height="279" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601231853726" />
     <state x="461" y="162" key="SettingsEditor" timestamp="1596468071640">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -113,14 +114,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1593979506795" />
-    <state x="92" y="92" width="1736" height="856" key="com.android.tools.idea.avdmanager.AvdListDialog" timestamp="1601028747571">
+    <state x="92" y="92" width="1736" height="856" key="com.android.tools.idea.avdmanager.AvdListDialog" timestamp="1601233032649">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="92" y="92" width="1736" height="856" key="com.android.tools.idea.avdmanager.AvdListDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601028747571" />
-    <state x="656" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1601028741647">
+    <state x="92" y="92" width="1736" height="856" key="com.android.tools.idea.avdmanager.AvdListDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601233032649" />
+    <state x="656" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1601231857664">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="656" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601028741647" />
+    <state x="656" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601231857664" />
     <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1595358056774">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

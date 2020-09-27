@@ -204,9 +204,14 @@ class _PhoneInputScreenState extends State<PhoneInputScreen>
                           });
                         } else {
                           try {
-                            await auth.phoneVerification(currentText);
+                            bool success = await auth.phoneVerification(
+                                currentText, context);
                             setState(() {
-                              hasError = false;
+                              if (success) {
+                                hasError = false;
+                              } else {
+                                hasError = true;
+                              }
                             });
                           } catch (e) {
                             errorController.add(ErrorAnimationType.shake);

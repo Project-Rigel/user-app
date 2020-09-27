@@ -199,24 +199,22 @@ class AuthService {
     mVerificationId = verificationId;
   }
 
-  phoneVerification(String smsCode) async {
-    print(mVerificationId);
-    Future<bool> phoneVerification(String smsCode, BuildContext context) async {
-      final prefs = await SharedPreferences.getInstance();
-      mVerificationId = prefs.getString('smsVerificationId') ?? '';
-      bool success;
-      final AuthCredential credential = PhoneAuthProvider.getCredential(
-        verificationId: mVerificationId,
-        smsCode: smsCode,
-      );
-      print(credential);
+  Future<bool> phoneVerification(String smsCode, BuildContext context) async {
+    final prefs = await SharedPreferences.getInstance();
+    mVerificationId = prefs.getString('smsVerificationId') ?? '';
+    bool success;
+    final AuthCredential credential = PhoneAuthProvider.getCredential(
+      verificationId: mVerificationId,
+      smsCode: smsCode,
+    );
+    print("PHONE VEFY");
+    print(credential);
 
-      FirebaseUser actualUser = await _auth.currentUser();
-      await actualUser.linkWithCredential(credential).then((value) {
-        success = true;
-        Navigator.pushReplacementNamed(context, '/home');
-      }).catchError((error) => success = false);
-      return success;
-    }
+    FirebaseUser actualUser = await _auth.currentUser();
+    await actualUser.linkWithCredential(credential).then((value) {
+      success = true;
+      Navigator.pushReplacementNamed(context, '/home');
+    }).catchError((error) => success = false);
+    return success;
   }
 }

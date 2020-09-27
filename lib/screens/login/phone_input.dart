@@ -27,6 +27,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen>
   final myPhoneController = TextEditingController();
 
   String currentText = "";
+  String inputPhone;
 
   @override
   void initState() {
@@ -205,7 +206,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen>
                         } else {
                           try {
                             bool success = await auth.phoneVerification(
-                                currentText, context);
+                                currentText, inputPhone, context);
                             setState(() {
                               if (success) {
                                 hasError = false;
@@ -336,6 +337,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen>
                     InkWell(
                       onTap: () async {
                         if (user != null) {
+                          inputPhone = myPhoneController.text;
                           auth.phone2Factor(myPhoneController.text);
                           gotoVerification();
                         }
